@@ -38,11 +38,11 @@ mod native_ffi {
     /// # Safety
     /// Returns `null` if the pointer is null or the key length is not 32.
     #[no_mangle]
-    pub extern "C" fn init_security_context(
+    pub unsafe extern "C" fn init_security_context(
         key_ptr: *const c_uchar,
         key_len: size_t,
     ) -> *mut SecurityContext {
-        if key_ptr.is_null() {
+        if key_ptr.is_null() || key_len != 32 {
             return ptr::null_mut();
         }
         let key_slice = unsafe { slice::from_raw_parts(key_ptr, key_len) };
@@ -57,14 +57,19 @@ mod native_ffi {
     /// generated for every call and prepended to the ciphertext.
     ///
     /// Resulting layout: `[nonce (12B)] || [ciphertext || tag]`
+    ///
+    /// # Safety
+    /// `ctx` must be a valid context returned by `init_security_context`.
+    /// `data_ptr` must reference `data_len` readable bytes and `out_len` must
+    /// be a valid writable pointer.
     #[no_mangle]
-    pub extern "C" fn encrypt_payload(
+    pub unsafe extern "C" fn encrypt_payload(
         ctx: *mut SecurityContext,
         data_ptr: *const c_uchar,
         data_len: size_t,
         out_len: *mut size_t,
     ) -> *mut c_uchar {
-        if ctx.is_null() || data_ptr.is_null() {
+        if ctx.is_null() || data_ptr.is_null() || out_len.is_null() {
             return ptr::null_mut();
         }
 
@@ -86,14 +91,19 @@ mod native_ffi {
 
     /// Decrypts a payload produced by `encrypt_payload`.
     /// Expects the layout `[nonce (12B)] || [ciphertext || tag]`.
+    ///
+    /// # Safety
+    /// `ctx` must be a valid context returned by `init_security_context`.
+    /// `data_ptr` must reference `data_len` readable bytes and `out_len` must
+    /// be a valid writable pointer.
     #[no_mangle]
-    pub extern "C" fn decrypt_payload(
+    pub unsafe extern "C" fn decrypt_payload(
         ctx: *mut SecurityContext,
         data_ptr: *const c_uchar,
         data_len: size_t,
         out_len: *mut size_t,
     ) -> *mut c_uchar {
-        if ctx.is_null() || data_ptr.is_null() || data_len < 12 {
+        if ctx.is_null() || data_ptr.is_null() || out_len.is_null() || data_len < 12 {
             return ptr::null_mut();
         }
 
@@ -113,8 +123,12 @@ mod native_ffi {
     }
 
     /// Frees memory allocated by `encrypt_payload` / `decrypt_payload`.
+    ///
+    /// # Safety
+    /// `ptr` must be a pointer returned by one of the payload functions and
+    /// `len` must be the exact length returned for that allocation.
     #[no_mangle]
-    pub extern "C" fn free_buffer(ptr: *mut c_uchar, len: size_t) {
+    pub unsafe extern "C" fn free_buffer(ptr: *mut c_uchar, len: size_t) {
         if !ptr.is_null() {
             unsafe {
                 let _ = Vec::from_raw_parts(ptr, len, len);
@@ -123,8 +137,12 @@ mod native_ffi {
     }
 
     /// Frees the memory of a security context.
+    ///
+    /// # Safety
+    /// `ctx` must be a pointer returned by `init_security_context` and must
+    /// not have been freed previously.
     #[no_mangle]
-    pub extern "C" fn free_security_context(ctx: *mut SecurityContext) {
+    pub unsafe extern "C" fn free_security_context(ctx: *mut SecurityContext) {
         if !ctx.is_null() {
             unsafe {
                 let _ = Box::from_raw(ctx);
@@ -200,23 +218,25 @@ mod tests {
     #[test]
     fn test_encrypt_decrypt_roundtrip() {
         let key = [0x01u8; 32];
-        let ctx = init_security_context(key.as_ptr(), key.len());
-        assert!(!ctx.is_null());
+        unsafe {
+            let ctx = init_security_context(key.as_ptr(), key.len());
+            assert!(!ctx.is_null());
 
-        let msg = b"test message";
-        let mut out_len: size_t = 0;
-        let enc = encrypt_payload(ctx, msg.as_ptr(), msg.len(), &mut out_len);
-        assert!(!enc.is_null());
+            let msg = b"test message";
+            let mut out_len: size_t = 0;
+            let enc = encrypt_payload(ctx, msg.as_ptr(), msg.len(), &mut out_len);
+            assert!(!enc.is_null());
 
-        let mut dec_len: size_t = 0;
-        let dec = decrypt_payload(ctx, enc, out_len, &mut dec_len);
-        assert!(!dec.is_null());
+            let mut dec_len: size_t = 0;
+            let dec = decrypt_payload(ctx, enc, out_len, &mut dec_len);
+            assert!(!dec.is_null());
 
-        let dec_slice = unsafe { slice::from_raw_parts(dec, dec_len) };
-        assert_eq!(dec_slice, msg);
+            let dec_slice = slice::from_raw_parts(dec, dec_len);
+            assert_eq!(dec_slice, msg);
 
-        free_buffer(enc, out_len);
-        free_buffer(dec, dec_len);
-        free_security_context(ctx);
+            free_buffer(enc, out_len);
+            free_buffer(dec, dec_len);
+            free_security_context(ctx);
+        }
     }
 }

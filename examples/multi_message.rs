@@ -20,7 +20,10 @@ fn main() {
             assert!(!ptr.is_null());
 
             let ciphertext = slice::from_raw_parts(ptr, out_len);
-            println!("Message #{i}: {} encrypted bytes -> {:x?}", out_len, ciphertext);
+            println!(
+                "Message #{i}: {} encrypted bytes -> {:x?}",
+                out_len, ciphertext
+            );
 
             free_buffer(ptr, out_len);
         }

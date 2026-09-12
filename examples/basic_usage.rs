@@ -17,7 +17,11 @@ fn main() {
         let mut enc_len = 0usize;
         let enc_ptr = encrypt_payload(ctx, message.as_ptr(), message.len(), &mut enc_len);
         assert!(!enc_ptr.is_null());
-        println!("Encrypted message ({} bytes): {:x?}", enc_len, slice::from_raw_parts(enc_ptr, enc_len));
+        println!(
+            "Encrypted message ({} bytes): {:x?}",
+            enc_len,
+            slice::from_raw_parts(enc_ptr, enc_len)
+        );
 
         let mut dec_len = 0usize;
         let dec_ptr = decrypt_payload(ctx, enc_ptr, enc_len, &mut dec_len);
