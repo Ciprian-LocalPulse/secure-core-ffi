@@ -14,7 +14,7 @@ Autor principal / conceptor al arhitecturii și codului sursă: **Ciprian Ștefa
 
 ## 1. Descriere
 
-Versiunea curentă: **v0.3.4** — nucleu AES-256-GCM testat pentru integrare multi-limbaj, cu FFI nativ, suport WebAssembly, header C oficial, teste pentru Python și Node.js și CI reproductibil.
+Versiunea curentă: **v0.3.5** — nucleu AES-256-GCM testat pentru integrare multi-limbaj, cu FFI nativ, suport WebAssembly, header C oficial, teste pentru Python și Node.js și CI reproductibil.
 
 `security-core-ffi` este un modul de criptare autentificată (AES-256-GCM) și derivare de chei, scris în **Rust** pentru siguranța memoriei, compilat ca bibliotecă dinamică (`.so` / `.dll` / `.dylib`) și expus printr-o interfață `extern "C"` stabilă.
 
