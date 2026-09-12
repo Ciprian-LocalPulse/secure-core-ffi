@@ -1,17 +1,20 @@
 //! # Security Core FFI
 //!
 //! A cryptographic security core (AES-256-GCM), written in Rust for memory
-//! safety, exposed through an `extern "C"` interface for integration into
-//! any ecosystem (C++, Python, Node.js, WebAssembly, Julia, etc.).
+//! safety. The actual crypto logic lives in `core`, and is shared,
+//! unmodified, by three interfaces:
+//!
+//! - `native_ffi`: an `extern "C"` layer for C/C++/Python/Julia bindings.
+//! - `wasm`: a `wasm-bindgen` layer for JavaScript/TypeScript.
+//! - Pure Rust consumers (e.g. the PyO3-based Python bindings crate), which
+//!   can depend on this crate directly and use `SecurityContext` and
+//!   `CoreError` without going through any FFI boundary at all.
 //!
 //! Author: **Ciprian Ștefan Pleșca**
 
-use aes_gcm::Aes256Gcm;
+mod core;
 
-/// Opaque structure holding the security context (key + cipher) in memory.
-pub struct SecurityContext {
-    cipher: Aes256Gcm,
-}
+pub use core::{CoreError, SecurityContext};
 
 // ---------------------------------------------------------------------------
 // Native FFI interface (C/C++/Python/Julia bindings)
@@ -19,14 +22,13 @@ pub struct SecurityContext {
 // Only compiled for non-WebAssembly targets: `libc::c_uchar` and `size_t`
 // are part of the native C interop layer and are not meaningful on
 // `wasm32-unknown-unknown`, which has no C runtime.
+//
+// This module contains no crypto logic of its own — it only translates
+// between raw C pointers and the safe `SecurityContext` API in `core`.
 // ---------------------------------------------------------------------------
 #[cfg(not(target_arch = "wasm32"))]
 mod native_ffi {
     use super::SecurityContext;
-    use aes_gcm::{
-        aead::{Aead, AeadCore, KeyInit, OsRng},
-        Aes256Gcm, Key,
-    };
     use libc::{c_uchar, size_t};
     use std::ptr;
     use std::slice;
@@ -40,15 +42,15 @@ mod native_ffi {
         key_ptr: *const c_uchar,
         key_len: size_t,
     ) -> *mut SecurityContext {
-        if key_ptr.is_null() || key_len != 32 {
+        if key_ptr.is_null() {
             return ptr::null_mut();
         }
-
         let key_slice = unsafe { slice::from_raw_parts(key_ptr, key_len) };
-        let key = Key::<Aes256Gcm>::from_slice(key_slice);
-        let cipher = Aes256Gcm::new(key);
 
-        Box::into_raw(Box::new(SecurityContext { cipher }))
+        match SecurityContext::new(key_slice) {
+            Ok(ctx) => Box::into_raw(Box::new(ctx)),
+            Err(_) => ptr::null_mut(),
+        }
     }
 
     /// Encrypts a payload using AES-256-GCM. A random nonce (12 bytes) is
@@ -69,13 +71,8 @@ mod native_ffi {
         let context = unsafe { &*ctx };
         let data = unsafe { slice::from_raw_parts(data_ptr, data_len) };
 
-        let nonce = Aes256Gcm::generate_nonce(&mut OsRng);
-
-        match context.cipher.encrypt(&nonce, data) {
-            Ok(mut ciphertext) => {
-                let mut final_payload = nonce.to_vec();
-                final_payload.append(&mut ciphertext);
-
+        match context.encrypt(data) {
+            Ok(final_payload) => {
                 unsafe { *out_len = final_payload.len() };
 
                 let mut boxed_slice = final_payload.into_boxed_slice();
@@ -103,10 +100,7 @@ mod native_ffi {
         let context = unsafe { &*ctx };
         let data = unsafe { slice::from_raw_parts(data_ptr, data_len) };
 
-        let (nonce_bytes, ciphertext) = data.split_at(12);
-        let nonce = aes_gcm::Nonce::from_slice(nonce_bytes);
-
-        match context.cipher.decrypt(nonce, ciphertext) {
+        match context.decrypt(data) {
             Ok(plaintext) => {
                 unsafe { *out_len = plaintext.len() };
                 let mut boxed_slice = plaintext.into_boxed_slice();
@@ -155,19 +149,19 @@ pub use native_ffi::{
 // Exposes the same security core directly to JavaScript/TypeScript, for
 // client-side use (e.g. a Next.js component). Compiled separately from the
 // native FFI path, via `wasm-pack build --target web`.
+//
+// Like `native_ffi`, this is now just a thin wrapper: it delegates to
+// `core::SecurityContext` and only translates `CoreError` into `JsValue`.
 // ---------------------------------------------------------------------------
 #[cfg(target_arch = "wasm32")]
 mod wasm {
-    use aes_gcm::{
-        aead::{Aead, AeadCore, KeyInit, OsRng},
-        Aes256Gcm, Key,
-    };
+    use super::core::SecurityContext as CoreContext;
     use wasm_bindgen::prelude::*;
 
     /// WASM wrapper around `SecurityContext`, exposed as a JavaScript object.
     #[wasm_bindgen]
     pub struct SecurityContext {
-        cipher: Aes256Gcm,
+        inner: CoreContext,
     }
 
     #[wasm_bindgen]
@@ -175,37 +169,23 @@ mod wasm {
         /// Creates a new security context from a 32-byte key.
         #[wasm_bindgen(constructor)]
         pub fn new(key: &[u8]) -> Result<SecurityContext, JsValue> {
-            if key.len() != 32 {
-                return Err(JsValue::from_str("The key must be exactly 32 bytes"));
-            }
-            let cipher = Aes256Gcm::new(Key::<Aes256Gcm>::from_slice(key));
-            Ok(SecurityContext { cipher })
+            CoreContext::new(key)
+                .map(|inner| SecurityContext { inner })
+                .map_err(|e| JsValue::from_str(&e.to_string()))
         }
 
         /// Encrypts data and returns `nonce || ciphertext || tag`.
         pub fn encrypt(&self, data: &[u8]) -> Result<Vec<u8>, JsValue> {
-            let nonce = Aes256Gcm::generate_nonce(&mut OsRng);
-            let ciphertext = self
-                .cipher
-                .encrypt(&nonce, data)
-                .map_err(|_| JsValue::from_str("Encryption failed"))?;
-
-            let mut out = nonce.to_vec();
-            out.extend_from_slice(&ciphertext);
-            Ok(out)
+            self.inner
+                .encrypt(data)
+                .map_err(|e| JsValue::from_str(&e.to_string()))
         }
 
         /// Decrypts a payload produced by `encrypt` (`nonce || ciphertext || tag`).
         pub fn decrypt(&self, payload: &[u8]) -> Result<Vec<u8>, JsValue> {
-            if payload.len() < 12 {
-                return Err(JsValue::from_str("Invalid payload: too short"));
-            }
-            let (nonce_bytes, ciphertext) = payload.split_at(12);
-            let nonce = aes_gcm::Nonce::from_slice(nonce_bytes);
-
-            self.cipher
-                .decrypt(nonce, ciphertext)
-                .map_err(|_| JsValue::from_str("Decryption failed: corrupted data or wrong key"))
+            self.inner
+                .decrypt(payload)
+                .map_err(|e| JsValue::from_str(&e.to_string()))
         }
     }
 }

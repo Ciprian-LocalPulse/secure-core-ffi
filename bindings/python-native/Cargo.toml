@@ -1,0 +1,20 @@
+[package]
+name = "secure-core-ffi-python"
+version = "0.2.0"
+edition = "2021"
+authors = ["Ciprian Ștefan Pleșca"]
+description = "Native Python extension (PyO3) for secure-core-ffi — AES-256-GCM"
+license = "Apache-2.0"
+repository = "https://github.com/Ciprian-LocalPulse/secure-core-ffi"
+readme = "README.md"
+
+[lib]
+name = "secure_core_ffi"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = { version = "0.20", features = ["extension-module"] }
+# Key must be "security_core" (not the package name "secure-core-ffi"),
+# because that crate's [lib] name = "security_core" is what `use security_core::...`
+# resolves against in src/lib.rs.
+security_core = { package = "secure-core-ffi", path = "../.." }
