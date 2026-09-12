@@ -120,7 +120,7 @@ jobs:
           cp bindings/wasm-nextjs/README.md bindings/wasm-nextjs/pkg/README.md
           cp LICENSE bindings/wasm-nextjs/pkg/LICENSE
           npm pkg set \
-            name=@ciprian-localpulse/secure-core-ffi-wasm \
+            name=@ciprianlocal/secure-core-ffi-wasm \
             version="${GITHUB_REF_NAME#v}" \
             description="WebAssembly AES-256-GCM bindings for secure-core-ffi" \
             files[0]='*.js' files[1]='*.wasm' files[2]='*.d.ts' \
