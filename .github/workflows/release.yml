@@ -129,9 +129,7 @@ jobs:
             --prefix bindings/wasm-nextjs/pkg
       - name: Publish npm package
         working-directory: bindings/wasm-nextjs/pkg
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish --access public
+        run: npm publish --access public --provenance
 
   publish:
     name: Publish GitHub release
