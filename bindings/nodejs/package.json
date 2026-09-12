@@ -1,13 +1,11 @@
 {
   "name": "security-core-ffi-nodejs-binding",
-  "version": "0.1.0",
-  "description": "Binding Node.js pentru nucleul de securitate Rust (security_core), via ffi-napi",
+  "version": "0.2.0",
+  "description": "Binding Node.js pentru nucleul de securitate Rust (security_core), via koffi",
   "main": "security_core.js",
   "author": "Ciprian Ștefan Pleșca",
   "license": "Apache-2.0",
   "dependencies": {
-    "ffi-napi": "^4.0.3",
-    "ref-array-napi": "^1.2.2",
-    "ref-napi": "^3.0.3"
+    "koffi": "^2.9.0"
   }
 }
