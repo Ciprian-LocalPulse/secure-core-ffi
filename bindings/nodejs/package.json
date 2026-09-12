@@ -1,6 +1,6 @@
 {
   "name": "security-core-ffi-nodejs-binding",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Binding Node.js pentru nucleul de securitate Rust (security_core), via koffi",
   "main": "security_core.js",
   "scripts": {
