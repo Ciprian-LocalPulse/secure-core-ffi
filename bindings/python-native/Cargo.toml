@@ -1,6 +1,6 @@
 [package]
 name = "secure-core-ffi-python"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2021"
 authors = ["Ciprian Ștefan Pleșca"]
 description = "Native Python extension (PyO3) for secure-core-ffi — AES-256-GCM"
