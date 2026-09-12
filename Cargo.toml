@@ -1,11 +1,14 @@
 [package]
-name = "security_core"
+name = "secure-core-ffi"
 version = "0.2.0"
 edition = "2021"
 authors = ["Ciprian Ștefan Pleșca"]
 description = "Nucleu de securitate criptografic (AES-256-GCM) expus prin FFI pentru integrare multi-limbaj"
 license = "Apache-2.0"
 repository = "https://github.com/Ciprian-LocalPulse/secure-core-ffi"
+readme = "README.md"
+keywords = ["cryptography", "aes-gcm", "ffi", "wasm", "security"]
+categories = ["cryptography", "wasm"]
 
 [lib]
 name = "security_core"
@@ -15,13 +18,13 @@ crate-type = ["cdylib", "staticlib", "rlib"]
 aes-gcm = "0.10"
 rand = "0.8"
 libc = "0.2"
-wasm-bindgen = "0.2"
 
 # getrandom trebuie sa foloseasca sursa de entropie a browserului cand tinta e wasm32
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.2", features = ["js"] }
+wasm-bindgen = "0.2"
 
-[dev-dependencies]
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
 wasm-bindgen-test = "0.3"
 
 [profile.release]
