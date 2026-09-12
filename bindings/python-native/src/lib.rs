@@ -41,7 +41,7 @@ impl SecurityCore {
     /// Encrypts `data` and returns `nonce || ciphertext || tag` as `bytes`.
     fn encrypt<'py>(&self, py: Python<'py>, data: &[u8]) -> PyResult<Bound<'py, PyBytes>> {
         let out = self.inner.encrypt(data).map_err(to_py_err)?;
-        Ok(PyBytes::new_bound(py, &out))
+        Ok(PyBytes::new(py, &out))
     }
 
     /// Decrypts a payload produced by `encrypt` and returns the plaintext
@@ -49,7 +49,7 @@ impl SecurityCore {
     /// was corrupted/tampered with.
     fn decrypt<'py>(&self, py: Python<'py>, payload: &[u8]) -> PyResult<Bound<'py, PyBytes>> {
         let out = self.inner.decrypt(payload).map_err(to_py_err)?;
-        Ok(PyBytes::new_bound(py, &out))
+        Ok(PyBytes::new(py, &out))
     }
 }
 

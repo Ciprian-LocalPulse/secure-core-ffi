@@ -13,7 +13,7 @@ name = "secure_core_ffi"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.22", features = ["extension-module"] }
+pyo3 = { version = "0.29", features = ["extension-module"] }
 # Key must be "security_core" (not the package name "secure-core-ffi"),
 # because that crate's [lib] name = "security_core" is what `use security_core::...`
 # resolves against in src/lib.rs.
