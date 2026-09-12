@@ -18,7 +18,7 @@ A: You don't need to ask yourself this question in practice — the core automat
 A: `decrypt_payload` returns `NULL`. GCM authentication tag verification fails for any modification of the data, whether it's accidental corruption (transmission error) or an intentional modification — the library does not distinguish between the two cases, and it shouldn't, for the reasons explained in the [API Reference](API-Reference.md).
 
 **Q: Can I integrate the library into WebAssembly?**
-A: WASM support is on the roadmap but not available in the current release — see `CHANGELOG.md`, "Unreleased" section, for the current status.
+A: Yes. The current release includes a `wasm-bindgen` interface and the CI workflow builds the WebAssembly target. See `bindings/wasm-nextjs/README.md` for browser and Next.js integration.
 
 **Q: How do I report a vulnerability?**
 A: See `SECURITY.md` — private reporting through GitHub Security Advisories, not through direct contact or public channels, to allow a fix before disclosure.

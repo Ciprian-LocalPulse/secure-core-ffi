@@ -18,7 +18,7 @@ R: Nu este necesar să vă puneți această întrebare în practică — nucleul
 R: `decrypt_payload` returnează `NULL`. Verificarea tag-ului de autentificare GCM eșuează pentru orice modificare a datelor, indiferent dacă este vorba de corupție accidentală (transmisie eronată) sau de o modificare intenționată — biblioteca nu distinge între cele două cazuri și nu ar trebui să o facă, din motivele explicate în [Referința API](Referinta-API.md).
 
 **Î: Pot integra biblioteca în WebAssembly?**
-R: Suportul WASM este pe roadmap, dar nu este disponibil în versiunea curentă — vezi `CHANGELOG.md`, secțiunea „Unreleased", pentru starea actualizată.
+R: Da. Versiunea curentă include o interfață `wasm-bindgen`, iar workflow-ul CI compilează ținta WebAssembly. Consultă `bindings/wasm-nextjs/README.md` pentru integrarea în browser și Next.js.
 
 **Î: Cum raportez o vulnerabilitate?**
 R: Consultă `SECURITY.md` — raportare privată prin GitHub Security Advisories, nu prin contact direct sau canale publice, pentru a permite remedierea înainte de dezvăluire.
