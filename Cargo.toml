@@ -16,10 +16,15 @@ crate-type = ["cdylib", "staticlib", "rlib"]
 
 [dependencies]
 aes-gcm = "0.10"
-rand = "0.8"
 libc = "0.2"
+# NOTA: nu declaram `rand` direct - codul nostru nu il foloseste nicaieri
+# (OsRng vine din `aead`, re-exportat de `aes-gcm`). O dependenta `rand`
+# neutilizata a fost eliminata, pentru ca doar genera propuneri automate
+# de update de la Dependabot fara niciun beneficiu real.
 
-# getrandom trebuie sa foloseasca sursa de entropie a browserului cand tinta e wasm32
+# getrandom trebuie sa foloseasca sursa de entropie a browserului cand tinta e wasm32.
+# Versiunea 0.2 cu feature-ul "js" e ceruta transitiv de `aead`/`crypto-common`
+# (folosit intern de aes-gcm pentru OsRng) - nu de codul nostru direct.
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.2", features = ["js"] }
 wasm-bindgen = "0.2"
