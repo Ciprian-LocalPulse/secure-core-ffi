@@ -230,6 +230,7 @@ flowchart TD
 - [x] Suport WebAssembly (WASM) pentru rulare în browser / Next.js
 - [x] Header C oficial și teste pentru binding-uri
 - [x] CI pentru Rust, Node.js, Python ctypes, PyO3 și WASM
+- [x] Workflow automat pentru publicarea wheel-urilor PyPI și a pachetului npm WASM (necesită secrete în repository)
 - [ ] Derivare de chei (Argon2 / HKDF) integrată în nucleu
 - [ ] Binding oficial Julia
 - [ ] Fuzzing automat al interfeței FFI (cargo-fuzz)

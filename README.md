@@ -233,6 +233,7 @@ flowchart TD
 - [x] Installable Python ctypes package metadata
 - [x] Node.js binding tests and npm test script
 - [x] CI checks for Rust, Node.js, Python ctypes, PyO3, and WASM
+- [x] Automated PyPI wheel and npm WASM publication workflow (requires repository secrets)
 - [ ] Key derivation (Argon2 / HKDF) integrated into the core
 - [ ] Official Julia binding
 - [ ] Automated fuzzing of the FFI interface (cargo-fuzz)

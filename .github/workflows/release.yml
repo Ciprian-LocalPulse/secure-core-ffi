@@ -58,9 +58,84 @@ jobs:
           name: wasm-web
           path: bindings/wasm-nextjs/pkg
 
+  python-wheels:
+    name: Python wheel (${{ matrix.os }}, Python ${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install maturin
+        run: python -m pip install --upgrade maturin==1.9.4
+      - name: Build wheel
+        run: maturin build --release --manifest-path bindings/python-native/Cargo.toml --out dist --interpreter python
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: python-wheels-${{ matrix.os }}-${{ matrix.python-version }}
+          path: dist/*.whl
+
+  publish-python:
+    name: Publish Python package
+    needs: python-wheels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: python-wheels-*
+          path: dist
+          merge-multiple: true
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
+
+  publish-npm:
+    name: Publish WASM npm package
+    needs: wasm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          name: wasm-web
+          path: bindings/wasm-nextjs/pkg
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Prepare npm package
+        shell: bash
+        run: |
+          cp bindings/wasm-nextjs/README.md bindings/wasm-nextjs/pkg/README.md
+          cp LICENSE bindings/wasm-nextjs/pkg/LICENSE
+          npm pkg set \
+            name=@ciprian-localpulse/secure-core-ffi-wasm \
+            version="${GITHUB_REF_NAME#v}" \
+            description="WebAssembly AES-256-GCM bindings for secure-core-ffi" \
+            files[0]='*.js' files[1]='*.wasm' files[2]='*.d.ts' \
+            files[3]=README.md files[4]=LICENSE \
+            publishConfig.access=public \
+            --prefix bindings/wasm-nextjs/pkg
+      - name: Publish npm package
+        working-directory: bindings/wasm-nextjs/pkg
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
+
   publish:
     name: Publish GitHub release
-    needs: [native, wasm]
+    needs: [native, wasm, python-wheels, publish-python, publish-npm]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1

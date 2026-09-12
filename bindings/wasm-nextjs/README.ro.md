@@ -12,7 +12,7 @@ cargo install wasm-pack   # o singura data
 wasm-pack build --target web --out-dir bindings/wasm-nextjs/pkg
 ```
 
-Rezultă folderul `pkg/` cu `security_wasm.js` și `security_wasm_bg.wasm`.
+Rezultă folderul `pkg/` cu `secure_core_ffi.js`, declarațiile TypeScript și binarul WebAssembly.
 
 ## 2. Configurare `next.config.js`
 
@@ -38,7 +38,7 @@ export default function SecureComponent({ data }) {
 
   useEffect(() => {
     const runSecure = async () => {
-      const wasm = await import("../bindings/wasm-nextjs/pkg/security_wasm");
+      const wasm = await import("../bindings/wasm-nextjs/pkg/secure_core_ffi.js");
       await wasm.default(); // inițializează modulul Wasm
 
       const key = crypto.getRandomValues(new Uint8Array(32));
@@ -68,7 +68,7 @@ export default function SecureComponent({ data }) {
 ```mermaid
 flowchart LR
     A["Rust Security Core (lib.rs)"] -->|"cargo build --release"| B["wasm-pack build --target web"]
-    B --> C["pkg/security_wasm.js + security_wasm_bg.wasm"]
+    B --> C["pkg/secure_core_ffi.js + secure_core_ffi_bg.wasm"]
     C --> D["next.config.js: asyncWebAssembly: true"]
     D --> E["Componenta React: SecurityContext.encrypt(data)"]
     E --> F["Date criptate afisate client-side"]

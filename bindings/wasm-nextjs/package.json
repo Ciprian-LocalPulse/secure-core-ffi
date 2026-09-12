@@ -1,0 +1,13 @@
+{
+  "name": "@ciprian-localpulse/secure-core-ffi-wasm",
+  "version": "0.3.0",
+  "description": "WebAssembly AES-256-GCM bindings for secure-core-ffi",
+  "license": "Apache-2.0",
+  "author": "Ciprian Ștefan Pleșca",
+  "files": ["*.js", "*.wasm", "*.d.ts", "README.md", "LICENSE"],
+  "main": "pkg/secure_core_ffi.js",
+  "types": "pkg/secure_core_ffi.d.ts",
+  "publishConfig": {
+    "access": "public"
+  }
+}

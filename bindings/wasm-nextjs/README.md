@@ -11,7 +11,7 @@ cargo install wasm-pack   # one-time
 wasm-pack build --target web --out-dir bindings/wasm-nextjs/pkg
 ```
 
-This produces the `pkg/` folder with `security_wasm.js` and `security_wasm_bg.wasm`.
+This produces the `pkg/` folder with `secure_core_ffi.js`, its TypeScript declarations, and the WebAssembly binary.
 
 ## 2. `next.config.js` setup
 
@@ -37,7 +37,7 @@ export default function SecureComponent({ data }) {
 
   useEffect(() => {
     const runSecure = async () => {
-      const wasm = await import("../bindings/wasm-nextjs/pkg/security_wasm");
+      const wasm = await import("../bindings/wasm-nextjs/pkg/secure_core_ffi.js");
       await wasm.default(); // initialize the Wasm module
 
       const key = crypto.getRandomValues(new Uint8Array(32));
@@ -67,7 +67,7 @@ export default function SecureComponent({ data }) {
 ```mermaid
 flowchart LR
     A["Rust Security Core (lib.rs)"] -->|"cargo build --release"| B["wasm-pack build --target web"]
-    B --> C["pkg/security_wasm.js + security_wasm_bg.wasm"]
+    B --> C["pkg/secure_core_ffi.js + secure_core_ffi_bg.wasm"]
     C --> D["next.config.js: asyncWebAssembly: true"]
     D --> E["React component: SecurityContext.encrypt(data)"]
     E --> F["Encrypted data rendered client-side"]

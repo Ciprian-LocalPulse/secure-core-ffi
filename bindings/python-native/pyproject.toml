@@ -1,0 +1,16 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "secure-core-ffi-native"
+version = "0.3.0"
+description = "Native PyO3 Python bindings for the secure-core-ffi AES-256-GCM core"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "Ciprian Ștefan Pleșca"}]
+
+[tool.maturin]
+bindings = "pyo3"
+module-name = "secure_core_ffi"
