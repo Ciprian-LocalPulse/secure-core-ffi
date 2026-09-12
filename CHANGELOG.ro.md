@@ -21,6 +21,18 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 - Țintă `cargo-fuzz` pentru payload-uri de decriptare malformate
 - Metadate de pachet Python pentru binding-ul ctypes
 
+## [0.3.0] - 2026-09-12
+
+### Adăugat
+- Header-ul oficial `include/security_core.h` pentru consumatori C și C++.
+- Teste de integrare Node.js și script npm de testare cu `koffi`.
+- Metadate de pachet Python ctypes și teste de integrare.
+- Țintă `cargo-fuzz` pentru payload-uri de decriptare malformate.
+- CI pentru Rust nativ, Clippy, formatare, Node.js, Python ctypes, PyO3 și WASM.
+
+### Corectat
+- Validarea pointerilor și lungimilor FFI a fost întărită, iar contractele ABI unsafe sunt documentate.
+
 ## [0.2.0] - 2026-09-12
 
 ### Adăugat

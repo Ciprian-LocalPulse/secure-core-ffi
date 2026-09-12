@@ -14,6 +14,8 @@ Autor principal / conceptor al arhitecturii și codului sursă: **Ciprian Ștefa
 
 ## 1. Descriere
 
+Versiunea curentă: **v0.3.0** — nucleu AES-256-GCM testat pentru integrare multi-limbaj, cu FFI nativ, suport WebAssembly, header C oficial, teste pentru Python și Node.js și CI reproductibil.
+
 `security-core-ffi` este un modul de criptare autentificată (AES-256-GCM) și derivare de chei, scris în **Rust** pentru siguranța memoriei, compilat ca bibliotecă dinamică (`.so` / `.dll` / `.dylib`) și expus printr-o interfață `extern "C"` stabilă.
 
 Acest nucleu poate fi integrat instant în **orice** ecosistem — Python, C++, Node.js, Julia, Go sau orice alt limbaj capabil să apeleze funcții C — fără a rescrie logica de securitate pentru fiecare platformă.
@@ -42,7 +44,7 @@ flowchart TB
 
     LIB --> CPP[Binding C++]
     LIB --> PY[Binding Python - ctypes]
-    LIB --> NODE[Binding Node.js - ffi-napi]
+    LIB --> NODE[Binding Node.js - koffi]
     LIB --> OTHER[Alte limbaje: Julia, Go, etc.]
 
     CPP --> APP1[Aplicație nativă]
@@ -213,17 +215,21 @@ flowchart TD
 | `tests/integration_test.rs` | Teste de integrare (roundtrip, cheie invalidă, date corupte) |
 | `examples/` | Programe Rust independente ce demonstrează utilizarea directă a bibliotecii |
 | `bindings/cpp` | Exemplu de consum din C++ |
-| `bindings/python` | Wrapper Python (`ctypes`) + `requirements.txt` |
-| `bindings/nodejs` | Wrapper Node.js (`ffi-napi`) + `package.json` |
+| `bindings/python` | Wrapper Python instalabil (`ctypes`) + teste de integrare |
+| `bindings/nodejs` | Wrapper Node.js (`koffi`) + teste de integrare |
+| `include/security_core.h` | Declarații ABI C/C++ stabile |
+| `fuzz/` | Țintă `cargo-fuzz` pentru payload-uri de decriptare malformate |
 | `bindings/wasm-nextjs` | Ghid și exemplu de integrare WebAssembly în Next.js |
 | `assets/` | Imagini și scheme folosite în documentație |
 | `wiki/en`, `wiki/ro` | Documentație extinsă (arhitectură, ghid de integrare, referință API, FAQ) în engleză și română |
 | `.github/workflows/ci.yml` | CI: build/test nativ, build Wasm, build Docker |
 | `Makefile` | Comenzi centralizate de build/test |
 
-## 12. Roadmap
+## 12. Statusul release-ului și roadmap
 
 - [x] Suport WebAssembly (WASM) pentru rulare în browser / Next.js
+- [x] Header C oficial și teste pentru binding-uri
+- [x] CI pentru Rust, Node.js, Python ctypes, PyO3 și WASM
 - [ ] Derivare de chei (Argon2 / HKDF) integrată în nucleu
 - [ ] Binding oficial Julia
 - [ ] Fuzzing automat al interfeței FFI (cargo-fuzz)

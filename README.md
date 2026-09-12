@@ -14,6 +14,8 @@ Original author / architect of the design and source code: **Ciprian Ștefan Ple
 
 ## 1. Overview
 
+Current release: **v0.3.0** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, and a reproducible CI pipeline.
+
 `security-core-ffi` is an authenticated encryption module (AES-256-GCM) with key handling, written in **Rust** for memory safety, compiled into a dynamic library (`.so` / `.dll` / `.dylib`) and exposed through a stable `extern "C"` interface.
 
 This core can be instantly integrated into **any** ecosystem — Python, C++, Node.js, WebAssembly/browser, Julia, Go, or any other language capable of calling C functions — without rewriting the security logic for each platform.
@@ -42,7 +44,7 @@ flowchart TB
 
     LIB --> CPP[C++ Binding]
     LIB --> PY[Python Binding - ctypes]
-    LIB --> NODE[Node.js Binding - ffi-napi]
+    LIB --> NODE[Node.js Binding - koffi]
     LIB --> OTHER[Other languages: Julia, Go, etc.]
 
     CPP --> APP1[Native application]
@@ -213,20 +215,24 @@ flowchart TD
 | `tests/integration_test.rs` | Integration tests (roundtrip, invalid key, corrupted data) |
 | `examples/` | Standalone Rust programs demonstrating direct library usage |
 | `bindings/cpp` | C++ consumption example |
-| `bindings/python` | Python wrapper (`ctypes`) + `requirements.txt` |
-| `bindings/nodejs` | Node.js wrapper (`ffi-napi`) + `package.json` |
+| `bindings/python` | Installable Python wrapper (`ctypes`) + integration tests |
+| `bindings/nodejs` | Node.js wrapper (`koffi`) + integration tests |
+| `include/security_core.h` | Stable C/C++ ABI declarations |
+| `fuzz/` | `cargo-fuzz` target for malformed decrypt payloads |
 | `bindings/wasm-nextjs` | WebAssembly integration guide and example for Next.js |
 | `assets/` | Images and diagrams used in the documentation |
 | `wiki/en`, `wiki/ro` | Extended documentation (architecture, integration guide, API reference, FAQ) in English and Romanian |
 | `.github/workflows/ci.yml` | CI: native build/test, Wasm build, Docker build |
 | `Makefile` | Centralized build/test commands |
 
-## 12. Roadmap
+## 12. Release status and roadmap
 
 - [x] WebAssembly (WASM) support for running in the browser / Next.js
 - [x] Official C header and binding integration tests
 - [x] FFI fuzz target for malformed decrypt payloads
 - [x] Installable Python ctypes package metadata
+- [x] Node.js binding tests and npm test script
+- [x] CI checks for Rust, Node.js, Python ctypes, PyO3, and WASM
 - [ ] Key derivation (Argon2 / HKDF) integrated into the core
 - [ ] Official Julia binding
 - [ ] Automated fuzzing of the FFI interface (cargo-fuzz)

@@ -20,6 +20,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `cargo-fuzz` target for malformed decrypt payloads
 - Python package metadata for the ctypes binding
 
+## [0.3.0] - 2026-09-12
+
+### Added
+- Official `include/security_core.h` header for C and C++ consumers.
+- Node.js integration test suite and npm test script using `koffi`.
+- Python ctypes package metadata and integration tests.
+- `cargo-fuzz` target for malformed decryption payloads.
+- CI coverage for native Rust, Clippy, formatting, Node.js, Python ctypes, PyO3, and WASM.
+
+### Fixed
+- Hardened FFI pointer and length validation and documented unsafe ABI contracts.
+
 ## [0.2.0] - 2026-09-12
 
 ### Added
