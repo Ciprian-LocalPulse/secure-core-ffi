@@ -3,9 +3,12 @@
 //! This crate is a thin wrapper: all AES-256-GCM logic lives in the
 //! `SecurityContext` type from the main `secure-core-ffi` crate. This
 //! module only translates between Rust `Result`s and Python exceptions.
+//!
+//! Uses the PyO3 0.22+ `Bound<'py, T>` API.
 
 use pyo3::exceptions::{PyRuntimeError, PyValueError};
 use pyo3::prelude::*;
+use pyo3::types::PyBytes;
 use security_core::{CoreError, SecurityContext as CoreContext};
 
 fn to_py_err(err: CoreError) -> PyErr {
@@ -36,24 +39,24 @@ impl SecurityCore {
     }
 
     /// Encrypts `data` and returns `nonce || ciphertext || tag` as `bytes`.
-    fn encrypt<'py>(&self, py: Python<'py>, data: &[u8]) -> PyResult<&'py pyo3::types::PyBytes> {
+    fn encrypt<'py>(&self, py: Python<'py>, data: &[u8]) -> PyResult<Bound<'py, PyBytes>> {
         let out = self.inner.encrypt(data).map_err(to_py_err)?;
-        Ok(pyo3::types::PyBytes::new(py, &out))
+        Ok(PyBytes::new_bound(py, &out))
     }
 
     /// Decrypts a payload produced by `encrypt` and returns the plaintext
     /// as `bytes`. Raises `RuntimeError` if the key is wrong or the data
     /// was corrupted/tampered with.
-    fn decrypt<'py>(&self, py: Python<'py>, payload: &[u8]) -> PyResult<&'py pyo3::types::PyBytes> {
+    fn decrypt<'py>(&self, py: Python<'py>, payload: &[u8]) -> PyResult<Bound<'py, PyBytes>> {
         let out = self.inner.decrypt(payload).map_err(to_py_err)?;
-        Ok(pyo3::types::PyBytes::new(py, &out))
+        Ok(PyBytes::new_bound(py, &out))
     }
 }
 
 /// `secure_core_ffi`: native Python bindings for the `secure-core-ffi`
 /// AES-256-GCM security core.
 #[pymodule]
-fn secure_core_ffi(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn secure_core_ffi(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<SecurityCore>()?;
     Ok(())
 }
