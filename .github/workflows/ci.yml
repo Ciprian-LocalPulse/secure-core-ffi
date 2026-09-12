@@ -37,6 +37,19 @@ jobs:
       - name: Run unit + integration tests
         run: cargo test --release --verbose
 
+      - name: Test Node.js binding
+        working-directory: bindings/nodejs
+        run: |
+          npm install
+          SECURITY_CORE_LIB=${{ github.workspace }}/target/release/libsecurity_core.so npm test
+
+      - name: Test Python ctypes binding
+        run: |
+          PYTHONPATH=bindings/python SECURITY_CORE_LIB=${{ github.workspace }}/target/release/libsecurity_core.so python -m unittest discover -s bindings/python -p 'test_*.py'
+
+      - name: Check native PyO3 binding
+        run: cargo check --manifest-path bindings/python-native/Cargo.toml --locked
+
   build-wasm:
     name: Build WebAssembly module
     runs-on: ubuntu-latest

@@ -118,6 +118,9 @@ Full source code is in [`src/lib.rs`](src/lib.rs).
 
 ## 8. C++ example
 
+The stable C ABI is declared in [`include/security_core.h`](include/security_core.h).
+Include that header from C or C++ applications and link against the native library.
+
 ```cpp
 extern "C" {
     struct SecurityContext;
@@ -221,6 +224,9 @@ flowchart TD
 ## 12. Roadmap
 
 - [x] WebAssembly (WASM) support for running in the browser / Next.js
+- [x] Official C header and binding integration tests
+- [x] FFI fuzz target for malformed decrypt payloads
+- [x] Installable Python ctypes package metadata
 - [ ] Key derivation (Argon2 / HKDF) integrated into the core
 - [ ] Official Julia binding
 - [ ] Automated fuzzing of the FFI interface (cargo-fuzz)

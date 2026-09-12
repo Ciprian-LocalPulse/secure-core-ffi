@@ -118,6 +118,9 @@ Codul complet se află în [`src/lib.rs`](src/lib.rs).
 
 ## 8. Exemplu C++
 
+ABI-ul C stabil este declarat în [`include/security_core.h`](include/security_core.h).
+Include acest header în aplicațiile C/C++ și leagă biblioteca nativă compilată.
+
 ```cpp
 extern "C" {
     struct SecurityContext;

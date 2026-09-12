@@ -28,6 +28,7 @@ LABEL maintainer="Ciprian Ștefan Pleșca" \
 WORKDIR /opt/security-core-ffi
 
 COPY --from=builder /usr/src/security-core-ffi/target/release/libsecurity_core.so ./lib/
+COPY include ./include
 COPY bindings ./bindings
 COPY README.md LICENSE ./
 

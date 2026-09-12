@@ -12,8 +12,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Planned
 - Key derivation (Argon2 / HKDF)
 - Official Julia binding
-- Automated fuzzing of the FFI interface (cargo-fuzz)
 - npm package publication for the Wasm module
+
+### Completed
+- Official C header in `include/security_core.h`
+- Node.js and Python ctypes binding integration tests
+- `cargo-fuzz` target for malformed decrypt payloads
+- Python package metadata for the ctypes binding
 
 ## [0.2.0] - 2026-09-12
 

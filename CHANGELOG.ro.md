@@ -13,8 +13,13 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 ### Planificat
 - Derivare de chei (Argon2 / HKDF)
 - Binding oficial Julia
-- Fuzzing automat al interfeței FFI (cargo-fuzz)
 - Publicare pachet npm pentru modulul Wasm
+
+### Finalizat
+- Header C oficial în `include/security_core.h`
+- Teste de integrare pentru binding-urile Node.js și Python ctypes
+- Țintă `cargo-fuzz` pentru payload-uri de decriptare malformate
+- Metadate de pachet Python pentru binding-ul ctypes
 
 ## [0.2.0] - 2026-09-12
 
