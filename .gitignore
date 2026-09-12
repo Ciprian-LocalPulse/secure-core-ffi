@@ -2,7 +2,10 @@
 /target/
 **/target/
 **/*.rs.bk
-Cargo.lock
+# Cargo.lock e trackuit intentionat (nu ignorat): GitHub Dependabot are
+# nevoie de el ca sa stie exact ce versiuni de dependente sunt instalate
+# si sa poata propune fix-uri de securitate. Fara el, alertele raman
+# deschise chiar daca Cargo.toml a fost deja actualizat.
 
 # ─── WebAssembly (wasm-pack) ────────────────────────────
 /bindings/wasm-nextjs/pkg/
@@ -44,5 +47,3 @@ Thumbs.db
 .env.local
 *.pem
 *.key
-
-**/target/
