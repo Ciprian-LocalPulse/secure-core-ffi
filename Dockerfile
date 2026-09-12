@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # ---- Etapa 1: build nucleu Rust ----
-FROM rust:1.79-slim AS builder
+FROM rust:1.98-slim AS builder
 
 WORKDIR /usr/src/security-core-ffi
 
