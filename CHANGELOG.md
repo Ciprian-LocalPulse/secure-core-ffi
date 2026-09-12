@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Planned
+- Key derivation (Argon2 / HKDF)
+- Official Julia binding
+- Automated fuzzing of the FFI interface (cargo-fuzz)
+- npm package publication for the Wasm module
+
+## [0.2.0] - 2026-09-12
+
 ### Added
 - `wasm-bindgen` module for the `wasm32` compilation target, exposing `SecurityContext` (constructor, `encrypt`, `decrypt`) directly in JavaScript/TypeScript
 - WebAssembly integration guide and example for Next.js (`bindings/wasm-nextjs/`), including `next.config.js` setup and a React component
@@ -18,14 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `bindings/python/requirements.txt` and `bindings/nodejs/package.json`
 - `assets/` folder with the visual diagram of the Rust → WebAssembly → Next.js flow
 - Dedicated CI job for WebAssembly builds (`wasm-pack build --target web`)
-- Extended `.gitignore` (Wasm artifacts, `pkg/`, compiled native libraries)
-- Full bilingual documentation (English default, Romanian via `*.ro.md` files and `wiki/ro/`)
+- Full bilingual documentation (English default, Romanian via `*.ro.md` files and `docs/ro/`)
+- Extended documentation set: `WHITEPAPER.md`, `MANIFESTO.md`, `DONATE.md`, `CODE_OF_CONDUCT.md`
+- `.github/workflows/ci.yml` — automated build and test on every push/PR (native + WebAssembly)
+- `.gitignore` covering Rust build artifacts, Wasm output, Node.js and Python local files
 
-### Planned
-- Key derivation (Argon2 / HKDF)
-- Official Julia binding
-- Automated fuzzing of the FFI interface (cargo-fuzz)
-- npm package publication for the Wasm module
+### Fixed
+- Added a `.gitignore` file, which was previously missing, to prevent build artifacts from being committed
 
 ## [0.1.0] - 2026-09-12
 

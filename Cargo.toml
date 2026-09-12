@@ -1,11 +1,11 @@
 [package]
 name = "security_core"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 authors = ["Ciprian Ștefan Pleșca"]
 description = "Nucleu de securitate criptografic (AES-256-GCM) expus prin FFI pentru integrare multi-limbaj"
 license = "Apache-2.0"
-repository = "https://github.com/CiprianStefanPlesca/security-core-ffi"
+repository = "https://github.com/Ciprian-LocalPulse/secure-core-ffi"
 
 [lib]
 name = "security_core"

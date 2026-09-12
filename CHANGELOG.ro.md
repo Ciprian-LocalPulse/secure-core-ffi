@@ -10,6 +10,14 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 
 ## [Unreleased]
 
+### Planificat
+- Derivare de chei (Argon2 / HKDF)
+- Binding oficial Julia
+- Fuzzing automat al interfeței FFI (cargo-fuzz)
+- Publicare pachet npm pentru modulul Wasm
+
+## [0.2.0] - 2026-09-12
+
 ### Adăugat
 - Modul `wasm-bindgen` pentru compilare țintă `wasm32`, expunând `SecurityContext` (constructor, `encrypt`, `decrypt`) direct în JavaScript/TypeScript
 - Ghid și exemplu de integrare WebAssembly în Next.js (`bindings/wasm-nextjs/`), incluzând configurare `next.config.js` și componentă React
@@ -19,13 +27,13 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 - `bindings/python/requirements.txt` și `bindings/nodejs/package.json`
 - Folder `assets/` cu schema vizuală a fluxului Rust → WebAssembly → Next.js
 - Job CI dedicat pentru build WebAssembly (`wasm-pack build --target web`)
-- `.gitignore` extins (artefacte Wasm, `pkg/`, biblioteci compilate native)
+- Documentație bilingvă completă (engleză implicit, română prin fișiere `*.ro.md` și `docs/ro/`)
+- Set extins de documente: `WHITEPAPER.md`, `MANIFESTO.md`, `DONATE.md`, `CODE_OF_CONDUCT.md`
+- `.github/workflows/ci.yml` — build și test automate la fiecare push/PR (nativ + WebAssembly)
+- `.gitignore` care acoperă artefactele de build Rust, output Wasm, fișiere locale Node.js și Python
 
-### Planificat
-- Derivare de chei (Argon2 / HKDF)
-- Binding oficial Julia
-- Fuzzing automat al interfeței FFI (cargo-fuzz)
-- Publicare pachet npm pentru modulul Wasm
+### Corectat
+- Adăugat fișierul `.gitignore`, care lipsea anterior, pentru a preveni includerea accidentală a artefactelor de build în commit-uri
 
 ## [0.1.0] - 2026-09-12
 
