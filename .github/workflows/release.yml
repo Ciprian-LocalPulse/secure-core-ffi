@@ -1,0 +1,85 @@
+name: Release artifacts
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  native:
+    name: Native library (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: linux-x86_64
+            library: target/release/libsecurity_core.so
+          - os: windows-latest
+            artifact: windows-x86_64
+            library: target/release/security_core.dll
+          - os: macos-latest
+            artifact: macos-arm64
+            library: target/release/libsecurity_core.dylib
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --release --lib
+      - name: Stage native artifact
+        shell: bash
+        run: |
+          mkdir -p "dist/${{ matrix.artifact }}"
+          cp "${{ matrix.library }}" "dist/${{ matrix.artifact }}/"
+          cp include/security_core.h "dist/${{ matrix.artifact }}/"
+          cp LICENSE "dist/${{ matrix.artifact }}/"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.artifact }}
+          path: dist/${{ matrix.artifact }}
+
+  wasm:
+    name: WebAssembly package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: jetli/wasm-pack@v0.13.1
+        with:
+          version: latest
+      - run: wasm-pack build --target web --out-dir bindings/wasm-nextjs/pkg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wasm-web
+          path: bindings/wasm-nextjs/pkg
+
+  publish:
+    name: Publish GitHub release
+    needs: [native, wasm]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+      - name: Archive release artifacts
+        run: |
+          cd dist
+          for directory in native-* wasm-web; do
+            tar -czf "../${directory}.tar.gz" "${directory}"
+          done
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --verify-tag \
+            --title "Security Core FFI ${GITHUB_REF_NAME}" \
+            --notes-file "RELEASE_NOTES_${GITHUB_REF_NAME}.md" \
+            native-*.tar.gz wasm-web.tar.gz
