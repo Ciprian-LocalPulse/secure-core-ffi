@@ -15,7 +15,7 @@ name = "security_core"
 crate-type = ["cdylib", "staticlib", "rlib"]
 
 [dependencies]
-aes-gcm = "0.10"
+aes-gcm = "0.11"
 rand = "0.8"
 libc = "0.2"
 
