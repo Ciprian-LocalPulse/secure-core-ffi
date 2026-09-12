@@ -1,5 +1,5 @@
 {
-  "name": "@ciprianlocal/secure-core-ffi-wasm",
+  "name": "secure-core-ffi-wasm",
   "version": "0.3.6",
   "description": "WebAssembly AES-256-GCM bindings for secure-core-ffi",
   "license": "Apache-2.0",
