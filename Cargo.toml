@@ -16,7 +16,7 @@ crate-type = ["cdylib", "staticlib", "rlib"]
 
 [dependencies]
 aes-gcm = "0.10"
-rand = "0.8"
+rand = "0.10"
 libc = "0.2"
 
 # getrandom trebuie sa foloseasca sursa de entropie a browserului cand tinta e wasm32
