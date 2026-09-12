@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+type: software
+title: "Security Core FFI: Nucleu de Securitate Criptografic Multi-Limbaj"
+version: 0.1.0
+date-released: 2026-09-12
+license: Apache-2.0
+repository-code: "https://github.com/CiprianStefanPlesca/security-core-ffi"
+abstract: >
+  A memory-safe cryptographic security core (AES-256-GCM) written in Rust,
+  compiled as a dynamic library and exposed through an extern "C" (FFI)
+  interface, enabling direct integration into C++, Python, Node.js, and
+  WebAssembly (browser/Next.js), without duplicating the encryption logic
+  for each platform.
+authors:
+  - family-names: "Pleșca"
+    given-names: "Ciprian Ștefan"
+    affiliation: "Independent author"
+keywords:
+  - cryptography
+  - rust
+  - ffi
+  - aes-gcm
+  - security
+  - cross-language
+  - foreign-function-interface
+  - webassembly
+  - wasm-bindgen
+  - nextjs

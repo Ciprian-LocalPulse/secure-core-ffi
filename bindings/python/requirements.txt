@@ -1,0 +1,5 @@
+# Binding-ul Python foloseste doar stdlib (ctypes), deci nu are dependinte
+# obligatorii. Fisierul exista pentru compatibilitate cu `pip install -r`
+# si pentru extinderi viitoare (ex: teste cu pytest).
+
+pytest>=8.0.0
