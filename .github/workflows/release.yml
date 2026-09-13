@@ -135,12 +135,13 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  publish-nodejs:
+ publish-nodejs:
     name: Publish Node.js binding
     needs: native
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v5
@@ -152,7 +153,7 @@ jobs:
         run: npm pkg set version="${GITHUB_REF_NAME#v}"
       - name: Publish Node.js package
         working-directory: bindings/nodejs
-        run: npm publish --access public
+        run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
