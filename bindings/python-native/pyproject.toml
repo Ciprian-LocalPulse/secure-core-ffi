@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "secure-core-ffi-native"
-version = "0.3.12"
+version = "0.3.13"
 description = "Native PyO3 Python bindings for the secure-core-ffi AES-256-GCM core"
 readme = "README.md"
 requires-python = ">=3.10"

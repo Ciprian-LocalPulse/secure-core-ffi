@@ -14,7 +14,7 @@ Original author / architect of the design and source code: **Ciprian Ștefan Ple
 
 ## 1. Overview
 
-Current release candidate: **v0.3.12** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, and a reproducible CI pipeline.
+Current public release: **v0.3.13** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, and a reproducible CI pipeline.
 
 `security-core-ffi` is an authenticated encryption module (AES-256-GCM) with key handling, written in **Rust** for memory safety, compiled into a dynamic library (`.so` / `.dll` / `.dylib`) and exposed through a stable `extern "C"` interface.
 
@@ -238,19 +238,28 @@ flowchart TD
 - [ ] Official Julia binding
 - [ ] Automated fuzzing of the FFI interface (cargo-fuzz)
 - [x] npm package publication workflow for `bindings/wasm-nextjs/pkg`
+- [x] Public release documentation for threat boundaries, key management, and operational readiness
 
 ## 13. Security
 
 See [SECURITY.md](SECURITY.md) for the vulnerability reporting policy.
 
-## 14. License
+## 14. Security and operations documentation
+
+- [Threat model](docs/en/Threat-Model.md)
+- [Key-management guidance](docs/en/Key-Management.md)
+- [Release readiness](docs/en/Release-Readiness.md)
+- [API reference](docs/en/API-Reference.md)
+- [Integration guide](docs/en/Integration-Guide.md)
+
+## 15. License
 
 This project is licensed under the [Apache License 2.0](LICENSE).
 
-## 15. Citation
+## 16. Citation
 
 If you use this project in research or other works, please cite it according to [CITATION.cff](CITATION.cff).
 
-## 16. Author
+## 17. Author
 
 **Ciprian Ștefan Pleșca** — architect and author of the security core's design and original source code (Rust, C++, Python).

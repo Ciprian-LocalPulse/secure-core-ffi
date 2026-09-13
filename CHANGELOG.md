@@ -12,13 +12,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Planned
 - Key derivation (Argon2 / HKDF)
 - Official Julia binding
-- npm package publication for the Wasm module
+- Independent cryptographic audit
 
 ### Completed
 - Official C header in `include/security_core.h`
 - Node.js and Python ctypes binding integration tests
 - `cargo-fuzz` target for malformed decrypt payloads
 - Python package metadata for the ctypes binding
+- Public WASM npm package with provenance-enabled release publishing
+
+## [0.3.13] - 2026-09-13
+
+### Added
+- Threat model, key-management guidance, release-readiness checklist, and security-response documentation.
+- Synchronized public version metadata across Rust, Python, Node.js, WebAssembly, README files, and the launch page.
+
+### Documentation
+- Clarified that the library is an authenticated-encryption primitive and does not provide key storage, rotation, compliance certification, or an independent audit.
 
 ## [0.3.7] - 2026-09-13
 

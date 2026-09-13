@@ -51,3 +51,5 @@ flowchart LR
 
 - The FFI interface exposes raw pointers; consumers in other languages **must** honor the call contract (correct lengths, memory freeing), otherwise they can introduce vulnerabilities in their own layer.
 - Key management and rotation remain the responsibility of the application integrating the library.
+- This project has not undergone an independent cryptographic audit. Treat the library as a focused authenticated-encryption primitive, not as a complete security or compliance product.
+- Before production use, consumers should complete an application-specific threat model, dependency review, fuzzing campaign, and operational incident-response plan.

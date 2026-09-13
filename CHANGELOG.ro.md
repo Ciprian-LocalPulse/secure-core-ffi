@@ -13,13 +13,23 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 ### Planificat
 - Derivare de chei (Argon2 / HKDF)
 - Binding oficial Julia
-- Publicare pachet npm pentru modulul Wasm
+- Audit criptografic independent
 
 ### Finalizat
 - Header C oficial în `include/security_core.h`
 - Teste de integrare pentru binding-urile Node.js și Python ctypes
 - Țintă `cargo-fuzz` pentru payload-uri de decriptare malformate
 - Metadate de pachet Python pentru binding-ul ctypes
+- Publicare publică a pachetului WASM npm prin CI cu provenance
+
+## [0.3.13] - 2026-09-13
+
+### Adăugat
+- Model de amenințări, ghid de gestionare a cheilor, checklist de pregătire pentru release și documentație de răspuns la incidente.
+- Sincronizarea metadatelor versiunii în Rust, Python, Node.js, WebAssembly, README și pagina de lansare.
+
+### Documentație
+- Clarificarea faptului că biblioteca este o primitivă de criptare autentificată și nu oferă stocare, rotație de chei, certificare sau audit independent.
 
 ## [0.3.0] - 2026-09-12
 
