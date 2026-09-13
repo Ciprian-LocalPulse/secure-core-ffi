@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   native:
+    if: startsWith(github.ref, 'refs/tags/v')
     name: Native library (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -45,6 +46,7 @@ jobs:
           path: dist/${{ matrix.artifact }}
 
   wasm:
+    if: startsWith(github.ref, 'refs/tags/v')
     name: WebAssembly package
     runs-on: ubuntu-latest
     steps:
@@ -61,6 +63,7 @@ jobs:
           path: bindings/wasm-nextjs/pkg
 
   python-wheels:
+    if: startsWith(github.ref, 'refs/tags/v')
     name: Python wheel (${{ matrix.os }}, Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -83,6 +86,7 @@ jobs:
           path: dist/*.whl
 
   publish-python:
+    if: startsWith(github.ref, 'refs/tags/v')
     name: Publish Python package
     needs: python-wheels
     runs-on: ubuntu-latest
@@ -100,6 +104,7 @@ jobs:
           skip-existing: true
 
   publish-npm:
+    if: startsWith(github.ref, 'refs/tags/v')
     name: Publish WASM npm package
     needs: wasm
     runs-on: ubuntu-latest
@@ -135,6 +140,7 @@ jobs:
         run: npm publish --access public --provenance
 
   publish:
+    if: startsWith(github.ref, 'refs/tags/v')
     name: Publish GitHub release
     needs: [native, wasm, python-wheels, publish-python, publish-npm]
     runs-on: ubuntu-latest
