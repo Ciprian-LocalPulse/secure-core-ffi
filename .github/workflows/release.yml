@@ -113,6 +113,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+          registry-url: https://registry.npmjs.org
       - name: Prepare npm package
         shell: bash
         run: |
@@ -131,6 +132,8 @@ jobs:
       - name: Publish npm package
         working-directory: bindings/wasm-nextjs/pkg
         run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish:
     name: Publish GitHub release

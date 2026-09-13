@@ -305,7 +305,7 @@ checksum = "cf54715a573b99ac80df0bc206da022bcd442c974952c7b9720069370852e21f"
 
 [[package]]
 name = "secure-core-ffi"
-version = "0.3.11"
+version = "0.3.12"
 dependencies = [
  "aes-gcm",
  "getrandom",
@@ -315,7 +315,7 @@ dependencies = [
 
 [[package]]
 name = "secure-core-ffi-python"
-version = "0.3.11"
+version = "0.3.12"
 dependencies = [
  "pyo3",
  "secure-core-ffi",

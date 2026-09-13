@@ -337,7 +337,7 @@ dependencies = [
 
 [[package]]
 name = "secure-core-ffi"
-version = "0.3.11"
+version = "0.3.12"
 dependencies = [
  "aes-gcm",
  "getrandom",
