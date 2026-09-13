@@ -1,6 +1,6 @@
 [package]
 name = "secure-core-ffi"
-version = "0.3.6"
+version = "0.3.8"
 edition = "2021"
 authors = ["Ciprian Ștefan Pleșca"]
 description = "Nucleu de securitate criptografic (AES-256-GCM) expus prin FFI pentru integrare multi-limbaj"

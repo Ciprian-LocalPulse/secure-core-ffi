@@ -27,6 +27,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Consistent WASM npm package name: `secure-core-ffi-wasm`.
 - Release workflow action versions aligned with the current CI runtime.
 
+## [0.3.8] - 2026-09-13
+
+### Added
+- Production launch page deployed through Vercel.
+- Standardized `secure-core-ffi-wasm` package metadata and release workflow.
+- Reproducible release packaging for native libraries, Python wheels and WebAssembly.
+
+### Verification
+- Rust tests, formatting and strict Clippy checks run before tagging.
+
 ## [0.3.0] - 2026-09-12
 
 ### Added
