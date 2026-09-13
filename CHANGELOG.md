@@ -30,6 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Documentation
 - Clarified that the library is an authenticated-encryption primitive and does not provide key storage, rotation, compliance certification, or an independent audit.
 
+## [0.3.14] - 2026-09-13
+
+### Added
+- Automated publication of the Node.js binding so the public npm distribution remains synchronized with the Rust, Python, and WebAssembly packages.
+
 ## [0.3.7] - 2026-09-13
 
 ### Added

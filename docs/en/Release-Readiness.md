@@ -1,6 +1,6 @@
 # Release Readiness
 
-## v0.3.13 public status
+## v0.3.14 public status
 
 - GitHub Actions build matrix: native Linux, Windows, macOS, WebAssembly, and Python wheels.
 - Public distribution: GitHub Release, PyPI, and the WASM npm package.

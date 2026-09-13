@@ -31,6 +31,11 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 ### Documentație
 - Clarificarea faptului că biblioteca este o primitivă de criptare autentificată și nu oferă stocare, rotație de chei, certificare sau audit independent.
 
+## [0.3.14] - 2026-09-13
+
+### Adăugat
+- Publicarea automată a binding-ului Node.js, pentru sincronizarea distribuției npm cu pachetele Rust, Python și WebAssembly.
+
 ## [0.3.0] - 2026-09-12
 
 ### Adăugat

@@ -135,9 +135,30 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  publish-nodejs:
+    name: Publish Node.js binding
+    needs: native
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Align package version
+        working-directory: bindings/nodejs
+        run: npm pkg set version="$GITHUB_REF_NAME#v"
+      - name: Publish Node.js package
+        working-directory: bindings/nodejs
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
   publish:
     name: Publish GitHub release
-    needs: [native, wasm, python-wheels, publish-python, publish-npm]
+    needs: [native, wasm, python-wheels, publish-python, publish-npm, publish-nodejs]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
