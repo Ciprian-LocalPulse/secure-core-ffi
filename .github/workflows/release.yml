@@ -149,7 +149,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: Align package version
         working-directory: bindings/nodejs
-        run: npm pkg set version="$GITHUB_REF_NAME#v"
+        run: npm pkg set version="${GITHUB_REF_NAME#v}"
       - name: Publish Node.js package
         working-directory: bindings/nodejs
         run: npm publish --access public
