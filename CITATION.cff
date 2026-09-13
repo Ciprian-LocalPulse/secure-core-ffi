@@ -5,7 +5,7 @@ title: "Security Core FFI: Nucleu de Securitate Criptografic Multi-Limbaj"
 version: 0.3.6
 date-released: 2026-09-12
 license: Apache-2.0
-repository-code: "https://github.com/CiprianStefanPlesca/security-core-ffi"
+repository-code: "https://github.com/Ciprian-LocalPulse/secure-core-ffi"
 abstract: >
   A memory-safe cryptographic security core (AES-256-GCM) written in Rust,
   compiled as a dynamic library and exposed through an extern "C" (FFI)

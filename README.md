@@ -14,7 +14,7 @@ Original author / architect of the design and source code: **Ciprian Ștefan Ple
 
 ## 1. Overview
 
-Current release: **v0.3.6** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, and a reproducible CI pipeline.
+Current source release: **v0.3.7** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, and a reproducible CI pipeline.
 
 `security-core-ffi` is an authenticated encryption module (AES-256-GCM) with key handling, written in **Rust** for memory safety, compiled into a dynamic library (`.so` / `.dll` / `.dylib`) and exposed through a stable `extern "C"` interface.
 
@@ -152,7 +152,7 @@ See [`bindings/python/security_core.py`](bindings/python/security_core.py) for a
 
 ```bash
 # Clone
-git clone https://github.com/CiprianStefanPlesca/security-core-ffi.git
+git clone https://github.com/Ciprian-LocalPulse/secure-core-ffi.git
 cd security-core-ffi
 
 # Build the Rust core (native .so/.dll/.dylib library)
@@ -237,7 +237,7 @@ flowchart TD
 - [ ] Key derivation (Argon2 / HKDF) integrated into the core
 - [ ] Official Julia binding
 - [ ] Automated fuzzing of the FFI interface (cargo-fuzz)
-- [ ] npm package publication for `bindings/wasm-nextjs/pkg`
+- [x] npm package publication workflow for `bindings/wasm-nextjs/pkg`
 
 ## 13. Security
 

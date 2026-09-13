@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Secure Core FFI is a Rust AES-256-GCM security core with C ABI, Python, Node.js and WebAssembly integrations." />
+    <meta name="theme-color" content="#08111f" />
+    <title>Secure Core FFI — one security core, every runtime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="nav shell">
+      <a class="brand" href="#top" aria-label="Secure Core FFI home"><span class="brand-mark">✦</span><span>secure-core<span class="muted">/ffi</span></span></a>
+      <nav><a href="#why">Why</a><a href="#integrations">Integrations</a><a href="#quickstart">Quickstart</a><a href="#security">Security</a></nav>
+      <a class="button button-small button-ghost" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi">View on GitHub <span>↗</span></a>
+    </header>
+
+    <main id="top">
+      <section class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse"></span> Rust core · AES-256-GCM · Apache-2.0</p>
+          <h1>One security core.<br /><em>Every runtime.</em></h1>
+          <p class="lede">A small, memory-conscious authenticated-encryption core written in Rust and exposed through a stable C ABI — with practical paths into Python, Node.js, C/C++ and the browser.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#quickstart">Start integrating <span>→</span></a><a class="text-link" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/releases">Download releases <span>↗</span></a></div>
+          <div class="trust-row"><span>✓ 256-bit keys</span><span>✓ Fresh nonce per encryption</span><span>✓ Rust memory safety</span></div>
+        </div>
+        <div class="hero-card" aria-label="Encryption flow diagram">
+          <div class="card-top"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span><span class="mono dim">secure_core::encrypt</span></div>
+          <div class="terminal-line"><span class="green">$</span> encrypt(payload, key)</div>
+          <div class="flow"><div class="flow-box">payload</div><div class="flow-arrow">→</div><div class="flow-box accent">AES-256-GCM</div><div class="flow-arrow">→</div><div class="flow-box">nonce + ciphertext + tag</div></div>
+          <div class="code-block"><span class="purple">const</span> encrypted = <span class="blue">core</span>.<span class="yellow">encrypt</span>(data);<br /><span class="comment">// authenticated, portable bytes</span></div>
+          <div class="status"><span class="status-icon">✓</span><span>authentication tag verified</span><span class="mono dim">12ms</span></div>
+        </div>
+      </section>
+
+      <section id="why" class="section shell">
+        <div class="section-heading"><p class="eyebrow">THE PROMISE</p><h2>Crypto logic once.<br />Integration everywhere.</h2><p>Keep the sensitive primitive in one audited-looking, testable Rust implementation. Let each application use the interface it already understands.</p></div>
+        <div class="feature-grid"><article><div class="feature-icon">01</div><h3>Small surface</h3><p>A focused authenticated-encryption API with explicit pointer, length and ownership contracts at the FFI boundary.</p></article><article><div class="feature-icon">02</div><h3>Portable by design</h3><p>Native libraries for Linux, Windows and macOS, plus a WebAssembly target for browser and Next.js experiments.</p></article><article><div class="feature-icon">03</div><h3>Honest primitives</h3><p>Built for encryption of already-managed keys. Key derivation, rotation and application policy remain explicit responsibilities.</p></article></div>
+      </section>
+
+      <section id="integrations" class="section section-dark"><div class="shell"><div class="section-heading compact"><p class="eyebrow">INTEGRATION MAP</p><h2>Your stack stays yours.</h2></div><div class="integration-grid"><div class="integration-main"><div class="core-node"><span>✦</span><strong>secure-core-ffi</strong><small>Rust · AES-256-GCM</small></div><div class="connector c1"></div><div class="connector c2"></div><div class="connector c3"></div><div class="connector c4"></div><div class="integration-node n1"><b>Python</b><small>PyO3 / ctypes</small></div><div class="integration-node n2"><b>Node.js</b><small>Koffi / WASM</small></div><div class="integration-node n3"><b>C / C++</b><small>stable ABI</small></div><div class="integration-node n4"><b>Browser</b><small>WebAssembly</small></div></div><aside class="integration-note"><p class="mono label">PAYLOAD CONTRACT</p><div class="payload"><span>12 bytes</span><b>nonce</b></div><div class="payload"><span>variable</span><b>ciphertext</b></div><div class="payload"><span>16 bytes</span><b>auth tag</b></div><p>Every encrypted output carries its nonce and authentication tag, so consumers receive a self-contained byte payload.</p></aside></div></div></section>
+
+      <section id="quickstart" class="section shell quickstart"><div class="section-heading compact"><p class="eyebrow">QUICKSTART</p><h2>From zero to encrypted bytes.</h2><p>Clone the source, build the core, and choose the binding that fits your application.</p></div><div class="quick-grid"><div class="install-card"><div class="tabs"><span class="active">Rust core</span><span>Python</span><span>WASM</span></div><pre><code><span class="prompt">$</span> git clone https://github.com/<br />  Ciprian-LocalPulse/secure-core-ffi<br /><span class="prompt">$</span> cd secure-core-ffi<br /><span class="prompt">$</span> cargo test --release<br /><span class="success">test result: ok · 9 passed</span></code></pre><a class="text-link" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/blob/main/README.md">Read the integration guide <span>↗</span></a></div><div class="release-card"><p class="mono label">CURRENT RELEASE</p><div class="release-number">v0.3.7</div><p>Public developer release with native builds, Python wheels and WebAssembly packaging.</p><a class="button button-primary" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/releases/tag/v0.3.7">See release notes <span>↗</span></a></div></div></section>
+
+      <section id="security" class="section shell security-section"><div class="security-copy"><p class="eyebrow">SECURITY, WITHOUT MARKETING FICTION</p><h2>Strong primitive.<br />Clear boundaries.</h2><p>Secure Core FFI is an encryption building block, not a complete key-management product. That distinction is part of the security model.</p><a class="text-link" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/blob/main/SECURITY.md">Read the security policy <span>↗</span></a></div><div class="limits"><div><span class="check">✓</span><span><b>Included</b><small>Authenticated encryption with AES-256-GCM and fresh CSPRNG nonces.</small></span></div><div><span class="check">✓</span><span><b>Included</b><small>Explicit FFI ownership and invalid-input handling.</small></span></div><div><span class="dash">—</span><span><b>Your responsibility</b><small>Key storage, derivation, rotation, access control and threat modeling.</small></span></div><div><span class="dash">—</span><span><b>Not yet claimed</b><small>Independent cryptographic audit or compliance certification.</small></span></div></div></section>
+
+      <section class="cta shell"><p class="eyebrow">BUILD ON A CLEAR FOUNDATION</p><h2>Bring your application.<br /><em>Keep your security boundary.</em></h2><div class="hero-actions"><a class="button button-primary" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi">Explore the source <span>↗</span></a><a class="button button-ghost" href="mailto:contact@ciprianlocalpulse.dev">Contact the author <span>↗</span></a></div></section>
+    </main>
+    <footer class="footer shell"><span class="brand"><span class="brand-mark">✦</span><span>secure-core<span class="muted">/ffi</span></span></span><span>Rust · AES-256-GCM · Apache-2.0</span><span>© 2026 Ciprian Ștefan Pleșca</span></footer>
+  </body>
+</html>

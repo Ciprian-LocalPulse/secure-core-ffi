@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `cargo-fuzz` target for malformed decrypt payloads
 - Python package metadata for the ctypes binding
 
+## [0.3.7] - 2026-09-13
+
+### Added
+- Public launch page under `site/`, deployable as a static Vercel project.
+- Consistent WASM npm package name: `secure-core-ffi-wasm`.
+- Release workflow action versions aligned with the current CI runtime.
+
 ## [0.3.0] - 2026-09-12
 
 ### Added
