@@ -19,21 +19,58 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
   </head>
   <body>
     <header class="nav shell">
       <a class="brand" href="#top" aria-label="Secure Core FFI home"><span class="brand-mark">✦</span><span>secure-core<span class="muted">/ffi</span></span></a>
-      <nav><a href="#why">Why</a><a href="#integrations">Integrations</a><a href="#quickstart">Quickstart</a><a href="#security">Security</a></nav>
+      <nav><a href="#lab">Research Lab</a><a href="#methodology">Methodology</a><a href="#integrations">Integrations</a><a href="#security">Security</a></nav>
       <a class="button button-small button-ghost" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi">View on GitHub <span>↗</span></a>
     </header>
 
     <main id="top">
+      <section id="lab" class="lab-section">
+        <div class="shell">
+          <div class="lab-intro">
+            <div>
+              <p class="eyebrow"><span class="pulse"></span> RESEARCH LAB · LOCAL EXPERIMENT</p>
+              <h1>Measure the primitive.<br /><em>Understand the boundary.</em></h1>
+              <p class="lab-lede">Run a reproducible AES-256-GCM encryption experiment in your browser. Nothing is uploaded, and every result is inspectable before you integrate the native Rust core.</p>
+            </div>
+            <div class="lab-badge"><span class="lab-badge-dot"></span><span><b>Client-side only</b><small>Web Crypto API · no telemetry</small></span></div>
+          </div>
+          <div class="lab-grid">
+            <section class="lab-panel lab-controls" aria-labelledby="experiment-title">
+              <div class="panel-heading"><div><p class="mono label">EXPERIMENT 01</p><h2 id="experiment-title">Authenticated encryption</h2></div><span class="protocol-tag">AES-256-GCM</span></div>
+              <label class="field-label" for="plaintext">Plaintext sample <span>UTF-8</span></label>
+              <textarea id="plaintext" rows="4">A reproducible security experiment begins with an explicit message.</textarea>
+              <div class="field-row"><div class="field-grow"><label class="field-label" for="key">256-bit key <span>base64</span></label><input id="key" type="password" autocomplete="off" spellcheck="false" /></div><button id="generate-key" class="icon-button" type="button" title="Generate a fresh random key">Generate key</button></div>
+              <div class="lab-actions"><button id="encrypt" class="button button-primary" type="button">Encrypt sample <span>→</span></button><button id="decrypt" class="button button-dark" type="button">Decrypt payload</button><button id="tamper" class="text-button" type="button">Tamper last byte</button></div>
+              <div id="lab-status" class="lab-status status-ready" role="status" aria-live="polite"><span class="status-icon">●</span><span><b>Ready for an experiment</b><small>Generate a key or encrypt the sample to begin.</small></span></div>
+            </section>
+            <section class="lab-panel lab-results" aria-labelledby="results-title">
+              <div class="panel-heading"><div><p class="mono label">OBSERVATION RECORD</p><h2 id="results-title">Result payload</h2></div><button id="copy-payload" class="copy-button" type="button">Copy payload</button></div>
+              <div class="result-block"><div class="result-label"><span>Nonce</span><small>96-bit IV · unique per encryption</small></div><code id="nonce-output">—</code></div>
+              <div class="result-block"><div class="result-label"><span>Self-contained payload</span><small>nonce + ciphertext + 128-bit tag</small></div><textarea id="payload-output" rows="4" readonly placeholder="Encrypted payload will appear here"></textarea></div>
+              <div class="metrics"><div><span>Operation</span><b id="operation-output">—</b></div><div><span>Payload length</span><b id="length-output">—</b></div><div><span>Elapsed</span><b id="time-output">—</b></div></div>
+              <div class="result-block plaintext-result"><div class="result-label"><span>Decrypted plaintext</span><small>Authentication must pass</small></div><textarea id="decrypted-output" rows="2" readonly placeholder="Decrypt a valid payload to inspect the result"></textarea></div>
+            </section>
+          </div>
+          <div class="lab-footnote"><span>⊙</span><p><b>Scope note:</b> this is a browser reference experiment using the platform Web Crypto API. The production package remains the audited-by-tests Rust implementation and its native/WASM bindings.</p><a href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/blob/main/docs/en/API-Reference.md">Read the API reference ↗</a></div>
+        </div>
+      </section>
+
+      <section id="methodology" class="methodology section shell">
+        <div class="section-heading compact"><p class="eyebrow">ACADEMIC METHOD</p><h2>A transparent protocol for a serious primitive.</h2><p>The lab exposes the security-relevant observations without pretending that a demo is a certification.</p></div>
+        <div class="method-grid"><article><span class="method-number">01</span><h3>Protocol</h3><p>A 256-bit secret key and a fresh 96-bit nonce are passed to AES-GCM. The authentication tag is appended to the ciphertext by the platform primitive.</p></article><article><span class="method-number">02</span><h3>Reproducibility</h3><p>Repeat the same plaintext with a newly generated nonce and observe a different payload. Copy the payload, then decrypt it to verify round-trip integrity.</p></article><article><span class="method-number">03</span><h3>Failure mode</h3><p>Flip one payload byte and decrypt again. GCM authentication must reject the modified record rather than returning unauthenticated plaintext.</p></article></div>
+      </section>
+
       <section class="hero shell">
         <div class="hero-copy">
           <p class="eyebrow"><span class="pulse"></span> Rust core · AES-256-GCM · Apache-2.0</p>
           <h1>One security core.<br /><em>Every runtime.</em></h1>
           <p class="lede">A small, memory-conscious authenticated-encryption core written in Rust and exposed through a stable C ABI — with practical paths into Python, Node.js, C/C++ and the browser.</p>
-          <div class="hero-actions"><a class="button button-primary" href="#quickstart">Start integrating <span>→</span></a><a class="text-link" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/releases">Download releases <span>↗</span></a></div>
+          <div class="hero-actions"><a class="button button-primary" href="#lab">Run the lab <span>→</span></a><a class="text-link" href="https://github.com/Ciprian-LocalPulse/secure-core-ffi/releases">Download releases <span>↗</span></a></div>
           <div class="trust-row"><span>✓ 256-bit keys</span><span>✓ Fresh nonce per encryption</span><span>✓ Rust memory safety</span></div>
         </div>
         <div class="hero-card" aria-label="Encryption flow diagram">
