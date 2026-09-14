@@ -15,6 +15,11 @@ This document reworks and extends the technical documentation of the **security-
 - [Architecture](Architecture.md)
 - [Integration guide (C++, Python, Node.js)](Integration-Guide.md)
 - [FFI API reference](API-Reference.md)
+- [Threat model](Threat-Model.md)
+- [Key-management guidance](Key-Management.md)
+- [Compatibility policy](Compatibility.md)
+- [Release integrity](Release-Integrity.md)
+- [Release readiness](Release-Readiness.md)
 - [Frequently asked questions (FAQ)](FAQ.md)
 
 ## Summary
@@ -45,7 +50,7 @@ flowchart LR
 <div align="center">
 <sub>
 
-[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [FAQ](FAQ.md) · [Author](Author.md)
+[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [Threat Model](Threat-Model.md) · [FAQ](FAQ.md) · [Author](Author.md)
 
 </sub>
 

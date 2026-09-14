@@ -135,7 +135,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
- publish-nodejs:
+  publish-nodejs:
     name: Publish Node.js binding
     needs: native
     runs-on: ubuntu-latest
@@ -153,7 +153,7 @@ jobs:
         run: npm pkg set version="${GITHUB_REF_NAME#v}"
       - name: Publish Node.js package
         working-directory: bindings/nodejs
-        run: npm publish --access public --provenance
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -172,16 +172,20 @@ jobs:
           for directory in native-* wasm-web; do
             tar -czf "../${directory}.tar.gz" "${directory}"
           done
+      - name: Generate release checksums and build manifest
+        run: |
+          sha256sum native-*.tar.gz wasm-web.tar.gz > SHA256SUMS.txt
+          cargo metadata --locked --format-version 1 > security-core-ffi-cargo-metadata.json
       - name: Publish release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
-            gh release upload "${GITHUB_REF_NAME}" --clobber native-*.tar.gz wasm-web.tar.gz
+            gh release upload "${GITHUB_REF_NAME}" --clobber native-*.tar.gz wasm-web.tar.gz SHA256SUMS.txt security-core-ffi-cargo-metadata.json
           else
             gh release create "${GITHUB_REF_NAME}" \
               --verify-tag \
               --title "Security Core FFI ${GITHUB_REF_NAME}" \
               --notes-file "RELEASE_NOTES_${GITHUB_REF_NAME}.md" \
-              native-*.tar.gz wasm-web.tar.gz
+              native-*.tar.gz wasm-web.tar.gz SHA256SUMS.txt security-core-ffi-cargo-metadata.json
           fi

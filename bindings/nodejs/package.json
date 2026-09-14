@@ -1,13 +1,34 @@
 {
   "name": "security-core-ffi-nodejs-binding",
-  "version": "0.3.14",
-  "description": "Binding Node.js pentru nucleul de securitate Rust (security_core), via koffi",
+  "version": "0.3.15",
+  "description": "Node.js Koffi binding for the secure-core-ffi AES-256-GCM native library",
   "main": "security_core.js",
   "scripts": {
     "test": "node test.js"
   },
   "author": "Ciprian Ștefan Pleșca",
   "license": "Apache-2.0",
+  "keywords": [
+    "aes-256-gcm",
+    "cryptography",
+    "ffi",
+    "koffi",
+    "rust",
+    "security"
+  ],
+  "files": [
+    "security_core.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ciprian-LocalPulse/secure-core-ffi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ciprian-LocalPulse/secure-core-ffi/issues"
+  },
+  "homepage": "https://secure-core-ffi.vercel.app/",
   "engines": {
     "node": ">=18"
   },

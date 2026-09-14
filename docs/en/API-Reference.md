@@ -79,7 +79,7 @@ Frees the security context (including the key in memory).
 <div align="center">
 <sub>
 
-[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [FAQ](FAQ.md) · [Author](Author.md)
+[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [Threat Model](Threat-Model.md) · [FAQ](FAQ.md) · [Author](Author.md)
 
 </sub>
 

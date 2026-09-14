@@ -56,7 +56,7 @@ Sub capotă, binding-ul Python folosește `ctypes.CDLL` pentru a lega biblioteca
 ## 4. Integrare în Node.js
 
 ```javascript
-const { SecurityCore } = require("./bindings/nodejs/security_core");
+const { SecurityCore } = require("security-core-ffi-nodejs-binding");
 const crypto = require("crypto");
 
 const key = crypto.randomBytes(32);
@@ -65,7 +65,7 @@ const enc = core.encrypt(Buffer.from("date sensibile"));
 const dec = core.decrypt(enc);
 ```
 
-Ca și în cazul Python, binding-ul Node.js (via `ffi-napi` sau echivalent) izolează codul JavaScript de gestionarea manuală a memoriei native. Este important ca instanța `SecurityCore` să fie eliberată explicit (sau prin `FinalizationRegistry`, dacă binding-ul o implementează) atunci când nu mai este necesară, pentru a evita acumularea de contexte native neeliberate — spre deosebire de obiectele JavaScript obișnuite, memoria alocată în Rust nu este gestionată de garbage collector-ul V8.
+Binding-ul Node.js folosește `koffi` pentru a încărca biblioteca nativă. Setează `SECURITY_CORE_LIB` la calea absolută a bibliotecii potrivite platformei atunci când calea implicită de dezvoltare nu este adecvată. Apelează `core.close()` exact o dată când contextul nu mai este necesar; contextele native nu sunt gestionate de garbage collector-ul V8.
 
 ## 5. Erori frecvente de integrare
 
@@ -84,7 +84,7 @@ flowchart LR
     B --> C{Limbaj țintă}
     C -->|C++| D["dlopen / linking static"]
     C -->|Python| E["ctypes.CDLL"]
-    C -->|Node.js| F["ffi-napi"]
+    C -->|Node.js| F["koffi"]
     D --> G["Aplicație finală"]
     E --> G
     F --> G

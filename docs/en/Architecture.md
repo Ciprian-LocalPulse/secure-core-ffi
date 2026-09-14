@@ -13,7 +13,7 @@ When a team needs authenticated encryption across several components written in 
 
 ## 2. Design principle
 
-The security core is fully isolated from the consuming language. The contract between Rust and the rest of the world consists of five `extern "C"` functions, each operating on raw pointers and explicit lengths (C ABI style) — a deliberate choice, since a C-style ABI is the one common denominator that nearly every modern language knows how to link against (via `ctypes` in Python, `dlopen`/static linking in C++, `ffi-napi` or `N-API` in Node.js).
+The security core is fully isolated from the consuming language. The contract between Rust and the rest of the world consists of five `extern "C"` functions, each operating on raw pointers and explicit lengths (C ABI style) — a deliberate choice, since a C-style ABI is the one common denominator that nearly every modern language knows how to link against (via `ctypes` in Python, `dlopen`/static linking in C++, or `koffi` in Node.js).
 
 ```mermaid
 classDiagram
@@ -92,7 +92,7 @@ Each layer has a single responsibility, which makes it possible to replace or ex
 This documentation would not be complete without an honest discussion of current limits:
 
 - There is no internal key derivation mechanism yet (e.g. Argon2 or HKDF) — see the [FAQ](FAQ.md) for details and roadmap status.
-- WebAssembly compilation target support is planned but not available in the current release.
+- WebAssembly is supported as a compilation target and published as the `secure-core-ffi-wasm` npm package. Browser-side keys remain exposed to the client environment; see [Key Management Guidance](Key-Management.md).
 - Automatic key rotation is not handled by the core and remains, deliberately, the application's responsibility — a design choice discussed in the threat model section above, not an accidental omission.
 
 ---
@@ -100,7 +100,7 @@ This documentation would not be complete without an honest discussion of current
 <div align="center">
 <sub>
 
-[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [FAQ](FAQ.md) · [Author](Author.md)
+[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [Threat Model](Threat-Model.md) · [FAQ](FAQ.md) · [Author](Author.md)
 
 </sub>
 

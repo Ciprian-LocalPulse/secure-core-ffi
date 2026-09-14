@@ -21,6 +21,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Python package metadata for the ctypes binding
 - Public WASM npm package with provenance-enabled release publishing
 
+## [0.3.15] - 2026-09-14
+
+### Added
+- Checksum manifest and Cargo dependency metadata attached to GitHub Releases.
+- Compatibility policy, release-integrity instructions, contributing guide, support policy, and Node.js package documentation.
+
+### Changed
+- Corrected stale WebAssembly and Node.js binding references in the English and Romanian documentation.
+
 ## [0.3.13] - 2026-09-13
 
 ### Added

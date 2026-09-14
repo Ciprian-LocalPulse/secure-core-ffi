@@ -1,31 +1,22 @@
 version: 2
 updates:
-  # 1. Pentru nucleul Rust (Cargo) aflat în rădăcina proiectului
-  - package-ecosystem: "cargo"
-    directory: "/"
+  - package-ecosystem: cargo
+    directory: /
     schedule:
-      interval: "weekly"
-
-  # 2. Pentru mediul Docker (Dockerfile)
-  - package-ecosystem: "docker"
-    directory: "/"
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: npm
+    directory: /bindings/nodejs
     schedule:
-      interval: "weekly"
-
-  # 3. Pentru binding-urile de Node.js / Next.js (npm)
-  - package-ecosystem: "npm"
-    directory: "/bindings/nodejs"
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: npm
+    directory: /bindings/wasm-nextjs
     schedule:
-      interval: "weekly"
-
-  # 4. Pentru binding-urile de Python (pip)
-  - package-ecosystem: "pip"
-    directory: "/bindings/python"
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
-
-  # 5. Pentru fluxurile automate de testare (CI/CD) pe care le vom adăuga
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 5

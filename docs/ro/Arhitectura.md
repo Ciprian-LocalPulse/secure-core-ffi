@@ -13,7 +13,7 @@ Când o echipă are nevoie de criptare autentificată în mai multe componente s
 
 ## 2. Principiu de design
 
-Nucleul de securitate este izolat complet de limbajul consumator. Contractul dintre Rust și restul lumii este format din cinci funcții `extern "C"`, fiecare operând pe pointeri raw și lungimi explicite (stil C ABI) — alegere deliberată, pentru că un ABI de tip C este singurul numitor comun pe care aproape orice limbaj modern știe să îl lege (prin `ctypes` în Python, `dlopen`/linking static în C++, `ffi-napi` sau `N-API` în Node.js).
+Nucleul de securitate este izolat complet de limbajul consumator. Contractul dintre Rust și restul lumii este format din cinci funcții `extern "C"`, fiecare operând pe pointeri raw și lungimi explicite (stil C ABI) — alegere deliberată, pentru că un ABI de tip C este singurul numitor comun pe care aproape orice limbaj modern știe să îl lege (prin `ctypes` în Python, `dlopen`/linking static în C++ sau `koffi` în Node.js).
 
 ```mermaid
 classDiagram
@@ -92,7 +92,7 @@ Fiecare strat are o singură responsabilitate, ceea ce face posibilă înlocuire
 Documentația nu ar fi completă fără o discuție onestă a limitelor actuale:
 
 - Nu există încă un mecanism intern de derivare a cheii (de exemplu Argon2 sau HKDF) — vezi [FAQ](FAQ.md) pentru detalii și starea din roadmap.
-- Suportul pentru compilare țintă WebAssembly este planificat, dar nu este disponibil în versiunea curentă.
+- WebAssembly este disponibil ca țintă de compilare și este publicat ca pachetul npm `secure-core-ffi-wasm`. Cheile utilizate în browser rămân expuse mediului client; vezi ghidul de gestionare a cheilor.
 - Rotația automată a cheilor nu este gestionată de nucleu și rămâne, deliberat, responsabilitatea aplicației — o alegere de design discutată în secțiunea de model de amenințare de mai sus, nu o omisiune accidentală.
 
 ---

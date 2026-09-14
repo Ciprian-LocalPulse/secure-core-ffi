@@ -1,6 +1,6 @@
 # Release Readiness
 
-## v0.3.14 public status
+## v0.3.15 public status
 
 - GitHub Actions build matrix: native Linux, Windows, macOS, WebAssembly, and Python wheels.
 - Public distribution: GitHub Release, PyPI, and the WASM npm package.
@@ -12,7 +12,7 @@
 - Complete an independent cryptographic and FFI security review.
 - Run continuous fuzzing and sanitizers against the C ABI and all bindings.
 - Establish a supported-version and deprecation policy.
-- Publish checksums or attestations through the organization's supply-chain policy.
+- Verify release checksums and the Cargo dependency manifest before deployment.
 - Document key ownership, rotation, revocation, backup, and incident response for the consuming application.
 - Validate the complete integration in the target operating system, runtime, and deployment model.
 

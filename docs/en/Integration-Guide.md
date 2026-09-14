@@ -56,7 +56,7 @@ Under the hood, the Python binding uses `ctypes.CDLL` to link the dynamic librar
 ## 4. Integrating with Node.js
 
 ```javascript
-const { SecurityCore } = require("./bindings/nodejs/security_core");
+const { SecurityCore } = require("security-core-ffi-nodejs-binding");
 const crypto = require("crypto");
 
 const key = crypto.randomBytes(32);
@@ -65,7 +65,7 @@ const enc = core.encrypt(Buffer.from("sensitive data"));
 const dec = core.decrypt(enc);
 ```
 
-As with Python, the Node.js binding (via `ffi-napi` or equivalent) isolates JavaScript code from manual native memory management. It's important that the `SecurityCore` instance be explicitly released (or via `FinalizationRegistry`, if the binding implements it) once no longer needed, to avoid accumulating unreleased native contexts — unlike ordinary JavaScript objects, memory allocated in Rust is not managed by V8's garbage collector.
+The Node.js binding uses `koffi` to load the native library. Set `SECURITY_CORE_LIB` to the absolute path of the matching platform library when the default development path is unsuitable. Call `core.close()` exactly once when the context is no longer needed; native contexts are not managed by V8's garbage collector.
 
 ## 5. Common integration errors
 
@@ -84,7 +84,7 @@ flowchart LR
     B --> C{Target language}
     C -->|C++| D["dlopen / static linking"]
     C -->|Python| E["ctypes.CDLL"]
-    C -->|Node.js| F["ffi-napi"]
+    C -->|Node.js| F["koffi"]
     D --> G["Final application"]
     E --> G
     F --> G
@@ -99,7 +99,7 @@ Regardless of the integration language, a minimal round-trip test is recommended
 <div align="center">
 <sub>
 
-[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [FAQ](FAQ.md) · [Author](Author.md)
+[Home](Home.md) · [Architecture](Architecture.md) · [Integration Guide](Integration-Guide.md) · [API Reference](API-Reference.md) · [Threat Model](Threat-Model.md) · [FAQ](FAQ.md) · [Author](Author.md)
 
 </sub>
 

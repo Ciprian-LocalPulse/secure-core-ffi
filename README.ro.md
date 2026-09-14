@@ -14,7 +14,7 @@ Autor principal / conceptor al arhitecturii și codului sursă: **Ciprian Ștefa
 
 ## 1. Descriere
 
-Versiunea publică actuală: **v0.3.14** — nucleu AES-256-GCM testat pentru integrare multi-limbaj, cu FFI nativ, suport WebAssembly, header C oficial, teste pentru Python și Node.js și CI reproductibil.
+Versiunea publică actuală: **v0.3.15** — nucleu AES-256-GCM testat pentru integrare multi-limbaj, cu FFI nativ, suport WebAssembly, header C oficial, teste pentru Python și Node.js, checksum-uri de release și CI reproductibil.
 
 `security-core-ffi` este un modul de criptare autentificată (AES-256-GCM) și derivare de chei, scris în **Rust** pentru siguranța memoriei, compilat ca bibliotecă dinamică (`.so` / `.dll` / `.dylib`) și expus printr-o interfață `extern "C"` stabilă.
 
@@ -240,14 +240,23 @@ flowchart TD
 
 Consultă [SECURITY.md](SECURITY.md) pentru politica de raportare a vulnerabilităților.
 
-## 14. Licență
+## 14. Documentație de securitate și operațiuni
+
+- [Model de amenințări](docs/en/Threat-Model.md)
+- [Ghid de gestionare a cheilor](docs/en/Key-Management.md)
+- [Politică de compatibilitate](docs/en/Compatibility.md)
+- [Integritatea release-urilor](docs/en/Release-Integrity.md)
+- [Pregătire pentru release](docs/en/Release-Readiness.md)
+- [Contribuții](CONTRIBUTING.md) · [Suport](SUPPORT.md)
+
+## 15. Licență
 
 Acest proiect este licențiat sub [Apache License 2.0](LICENSE).
 
-## 15. Citare
+## 16. Citare
 
 Dacă folosești acest proiect în cercetare sau alte lucrări, te rugăm să citezi conform [CITATION.cff](CITATION.cff).
 
-## 16. Autor
+## 17. Autor
 
 **Ciprian Ștefan Pleșca** — conceptor și autor al arhitecturii nucleului de securitate și al codului sursă original (Rust, C++, Python).

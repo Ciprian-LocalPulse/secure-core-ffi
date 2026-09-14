@@ -52,3 +52,5 @@ flowchart LR
 
 - Interfața FFI expune pointeri raw; consumatorii din alte limbaje **trebuie** să respecte contractul de apel (lungimi corecte, eliberare memorie), altfel pot introduce vulnerabilități în stratul lor propriu.
 - Gestionarea și rotația cheilor rămân responsabilitatea aplicației care integrează biblioteca.
+- Proiectul nu a trecut printr-un audit criptografic independent. Biblioteca trebuie tratată ca o primitivă de criptare autentificată, nu ca un produs complet de securitate sau conformitate.
+- Înainte de utilizarea în producție, consumatorii trebuie să realizeze un model de amenințări specific aplicației, revizuirea dependențelor, fuzzing și un plan operațional de răspuns la incidente.

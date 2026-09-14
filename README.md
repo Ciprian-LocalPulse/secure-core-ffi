@@ -14,7 +14,7 @@ Original author / architect of the design and source code: **Ciprian Ștefan Ple
 
 ## 1. Overview
 
-Current public release: **v0.3.14** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, and a reproducible CI pipeline.
+Current public release: **v0.3.15** — a tested, cross-language AES-256-GCM security core with native FFI, WebAssembly support, an official C header, Python and Node.js integration tests, release checksums, and a reproducible CI pipeline.
 
 `security-core-ffi` is an authenticated encryption module (AES-256-GCM) with key handling, written in **Rust** for memory safety, compiled into a dynamic library (`.so` / `.dll` / `.dylib`) and exposed through a stable `extern "C"` interface.
 
@@ -249,8 +249,11 @@ See [SECURITY.md](SECURITY.md) for the vulnerability reporting policy.
 - [Threat model](docs/en/Threat-Model.md)
 - [Key-management guidance](docs/en/Key-Management.md)
 - [Release readiness](docs/en/Release-Readiness.md)
+- [Compatibility policy](docs/en/Compatibility.md)
+- [Release integrity](docs/en/Release-Integrity.md)
 - [API reference](docs/en/API-Reference.md)
 - [Integration guide](docs/en/Integration-Guide.md)
+- [Contributing](CONTRIBUTING.md) · [Support](SUPPORT.md)
 
 ## 15. License
 

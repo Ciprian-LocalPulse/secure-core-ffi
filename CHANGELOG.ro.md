@@ -22,6 +22,15 @@ iar proiectul respectă [Semantic Versioning](https://semver.org/lang/ro/).
 - Metadate de pachet Python pentru binding-ul ctypes
 - Publicare publică a pachetului WASM npm prin CI cu provenance
 
+## [0.3.15] - 2026-09-14
+
+### Adăugat
+- Manifest de checksum-uri și metadate Cargo atașate release-urilor GitHub.
+- Politică de compatibilitate, instrucțiuni pentru integritatea release-urilor, ghid de contribuții, politică de suport și documentație pentru pachetul Node.js.
+
+### Modificat
+- Referințe corectate pentru WebAssembly și binding-ul Node.js în documentația engleză și română.
+
 ## [0.3.13] - 2026-09-13
 
 ### Adăugat

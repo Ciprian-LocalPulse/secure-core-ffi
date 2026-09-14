@@ -1,0 +1,38 @@
+name: Bug report
+description: Report a reproducible non-security defect.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not report security vulnerabilities here. Use the private GitHub Security Advisory flow described in SECURITY.md."
+  - type: input
+    id: version
+    attributes:
+      label: Package version or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: integration
+    attributes:
+      label: Integration
+      options:
+        - Rust core
+        - C or C++ FFI
+        - Python ctypes
+        - Python native
+        - Node.js
+        - WebAssembly
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Remove keys, tokens, and sensitive data before posting.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
