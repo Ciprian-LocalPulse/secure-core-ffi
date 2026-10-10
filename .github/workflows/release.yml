@@ -85,7 +85,7 @@ jobs:
     needs: python-wheels
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v8.0.1
+      - uses: actions/download-artifact@v8.0.2
         with:
           pattern: python-wheels-*
           path: dist
@@ -106,7 +106,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: actions/download-artifact@v8.0.1
+      - uses: actions/download-artifact@v8.0.2
         with:
           name: wasm-web
           path: bindings/wasm-nextjs/pkg
@@ -163,7 +163,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: actions/download-artifact@v8.0.1
+      - uses: actions/download-artifact@v8.0.2
         with:
           path: dist
       - name: Archive release artifacts
